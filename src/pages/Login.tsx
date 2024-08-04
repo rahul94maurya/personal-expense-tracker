@@ -1,4 +1,4 @@
-import { setAuthToken } from "../utilities/utility";
+import { fetchLoginStatus } from "../utilities/utility";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -10,20 +10,30 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { useState } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
+  const [toast, setToast] = useState({ open: false, message: "" });
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-    setAuthToken("dummyToken");
-    navigate("/");
+    const loginDetails = {
+      username: data.get("email") as string,
+      password: data.get("password") as string,
+    };
+    const response = await fetchLoginStatus(loginDetails);
+    if (response?.accessToken) {
+      navigate("/");
+    } else {
+      setToast({ message: response, open: true });
+    }
   };
+
+  const handleCloseToast = () => setToast({ message: "", open: false });
 
   return (
     <Container component="main" maxWidth="xs">
@@ -78,6 +88,20 @@ const Login = () => {
           </Button>
         </Box>
       </Box>
+      <Snackbar
+        open={toast.open}
+        autoHideDuration={2000}
+        onClose={handleCloseToast}
+      >
+        <Alert
+          onClose={handleCloseToast}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {toast.message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

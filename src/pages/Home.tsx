@@ -15,76 +15,48 @@ import {
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-// const fetchData = function () {
-//   try {
-//     const response = await axios.get("https://dummyjson.com/http/408");
-//     return response.data;
-//   } catch (err) {
-//     const error = err as AxiosError;
-//     if (error.response) {
-//       // when working with AXIOS we get this response key when we get an error from backend server
-//       // but if internet is not available then we don't get this response key
-//       if (error.response.status === 401) {
-//         //handle different error response based on status code
-//         return thunkAPI.rejectWithValue(
-//           (error.response.data as { message: string }).message
-//         );
-//       }
-//       if (error.response.status === 404) {
-//         // it is used when the API endpoint is not available or we have entered an invalid API Endpoint
-//         return thunkAPI.rejectWithValue(
-//           (error.response.data as { message: string }).message ||
-//             error.response.data
-//         );
-//       }
-//       return thunkAPI.rejectWithValue(
-//         (error.response.data as { message: string }).message
-//       );
-//     } else {
-//       // this else block will executed when we have no internet
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// };
+import { allMonths, data } from "../utilities/constants";
 
-// const allMonths = [
-//   "January",
-//   "February",
-//   "March",
-//   "April",
-//   "May",
-//   "June",
-//   "July",
-//   "August",
-//   "September",
-//   "October",
-//   "November",
-//   "December",
-// ];
 export default function Home() {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
+
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
   };
-  const [month, setMonth] = useState("July");
+
   // const handleChange = (event: SelectChangeEvent) => {
   //   setMonth(event.target.value as string);
   // };
+
+  const handleNextMonthClick = () => {
+    if (selectedMonth < 11) setSelectedMonth((pre) => pre + 1);
+  };
+
+  const handlePreviousMonthClick = () => {
+    if (selectedMonth > 0) setSelectedMonth((pre) => pre - 1);
+  };
+
   return (
     <Stack>
       <Card sx={{ mb: 2, width: "100%" }}>
         <Stack
           direction="row"
-          alignItems={"center"}
-          justifyContent={"space-between"}
+          alignItems="center"
+          justifyContent="space-between"
           p={1.5}
         >
-          <IconButton aria-label="delete" size="medium">
+          <IconButton
+            aria-label="left arrow"
+            size="medium"
+            onClick={handlePreviousMonthClick}
+          >
             <ArrowBackIosIcon />
           </IconButton>
           <Stack direction={"row"} gap={5}>
-            <Typography variant="h6">{month}, 2024</Typography>
-            {/* <Chip label="Amount : 12,234" color="success"> */}
+            <Typography variant="h6">
+              {allMonths[selectedMonth]}, {new Date().getFullYear()}
+            </Typography>
             <Divider
               orientation="vertical"
               flexItem
@@ -92,14 +64,24 @@ export default function Home() {
             />
             <Typography variant="h6">Total : 12,234</Typography>
           </Stack>
-          <IconButton aria-label="delete" size="medium">
+          <IconButton
+            aria-label="Right arrow"
+            size="medium"
+            onClick={handleNextMonthClick}
+          >
             <ArrowForwardIosIcon />
           </IconButton>
         </Stack>
-        {/* <CardContent></CardContent> */}
       </Card>
+      {data.length === 0 ? (
+        <Stack justifyContent="center">
+          No expense Found. Please add a expense
+        </Stack>
+      ) : (
+        <ExpenseCard expenseData={data} />
+      )}
 
-      <ExpenseCard />
+      {/* */}
 
       <Tooltip title="Add new Expense" arrow>
         <Fab
