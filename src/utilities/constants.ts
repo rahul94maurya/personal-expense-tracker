@@ -734,3 +734,21 @@ export const expenseTableData = [
     amount: 120.56,
   },
 ];
+
+export const BASE_URL =
+  "https://expense-tracker-production-6b8d.up.railway.app";
+
+export const allMonths = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];

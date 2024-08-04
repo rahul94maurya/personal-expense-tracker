@@ -6,13 +6,28 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import { data } from "../utilities/constants";
 import ExpenseTable from "./ExpenseTable";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 // import Chip from "@mui/material/Chip";
 
-export default function ExpenseCard() {
+interface ExpenseCardProps {
+  expenseData: {
+    id: number;
+    date: string;
+    amount: string | number;
+    tableData: {
+      id: number;
+      category: string;
+      subCategory: string;
+      mode: string;
+      description: string;
+      amount: number;
+    }[];
+  }[];
+}
+
+export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
   const [expanded, setExpanded] = useState<number | false>(false);
 
   const handleChange =
@@ -21,7 +36,7 @@ export default function ExpenseCard() {
     };
   return (
     <Box>
-      {data.map((expense) => (
+      {expenseData.map((expense) => (
         <Accordion
           key={expense.id}
           expanded={expanded === expense.id}
