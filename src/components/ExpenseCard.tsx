@@ -33,6 +33,7 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
 
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      console.log("event", event);
       setExpanded(isExpanded ? panel : false);
     };
   return (
