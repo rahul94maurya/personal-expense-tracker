@@ -15,6 +15,11 @@ const navigationLinks = [
   { label: "Home", path: "/home", icon: <HomeIcon /> },
   { label: "Dashboard", path: "/", icon: <SummarizeIcon /> },
   { label: "Analysis", path: "/analysis", icon: <HomeRepairServiceIcon /> },
+  {
+    label: "Categories",
+    path: "/categories",
+    icon: <HomeRepairServiceIcon />,
+  },
 ];
 const MainNavigation = () => {
   return (

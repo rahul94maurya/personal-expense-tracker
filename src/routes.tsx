@@ -4,6 +4,7 @@ import RootLayout from "./layouts/RootLayout";
 import HomePage from "./pages/Home";
 import DashboardPage from "./pages/Dashboard";
 import AnalysisPage from "./pages/Analysis";
+import CategoriesPage from "./pages/Categories";
 
 export const routes = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const routes = createBrowserRouter([
       {
         path: "/analysis",
         element: <AnalysisPage />,
+      },
+      {
+        path: "/categories",
+        element: <CategoriesPage />,
       },
     ],
   },

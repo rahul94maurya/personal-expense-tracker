@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
@@ -6,7 +6,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import Autocomplete from "@mui/material/Autocomplete";
-import { expenseCategory, expenseMode } from "../utilities/constants";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -17,11 +16,34 @@ import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import {
+  fetchExpenseCategory,
+  fetchExpenseMode,
+  fetchExpenseSubCategory,
+} from "../utilities/utility";
 
 interface AddNewExpenseProps {
   handleClose: () => void;
   openModal: boolean;
 }
+
+interface ExpenseSubcategory {
+  id: number;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+interface ExpenseCategory extends ExpenseSubcategory {
+  userId: number;
+}
+interface ExpenseMode {
+  id: number;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  active: boolean;
+}
+
 export default function AddNewExpense({
   handleClose,
   openModal,
@@ -34,44 +56,82 @@ export default function AddNewExpense({
   const [expenseDate, setExpenseDate] = useState<Dayjs | null>(
     dayjs(new Date())
   );
-  const expenseCategoryOptions = expenseCategory.map(
-    (expense) => expense.categoryName
+  const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
+    []
+  );
+  const [expenseSubCategories, setExpenseSubCategories] = useState<
+    ExpenseSubcategory[]
+  >([]);
+  const [expenseMode, setExpenseMode] = useState<ExpenseMode[]>([]);
+
+  const getExpenseCategory = async function () {
+    const category = await fetchExpenseCategory();
+    setExpenseCategories(category);
+  };
+
+  const getSubCategory = async function (categoryId: number) {
+    const subCategory = await fetchExpenseSubCategory(categoryId);
+    setExpenseSubCategories(subCategory);
+  };
+
+  const getExpenseMode = async function () {
+    const mode = await fetchExpenseMode();
+    setExpenseMode(mode);
+  };
+
+  useEffect(() => {
+    getExpenseCategory();
+    getExpenseMode();
+  }, []);
+
+  useEffect(() => {
+    if (category) {
+      const [selectedCategory] = expenseCategories.filter(
+        (ele) => ele.name === category
+      );
+      getSubCategory(selectedCategory?.id);
+    }
+  }, [category, expenseCategories]);
+
+  const expenseCategoryOptions = expenseCategories?.map(
+    (expense) => expense?.name
   );
 
-  const subCategoryOptions = category
-    ? expenseCategory
-        .filter((ele) => ele.categoryName === category)[0]
-        ?.subCategory.map((subCategory) => subCategory.subCategoryName)
-    : [];
+  const subCategoryOptions = expenseSubCategories?.map(
+    (subCategory) => subCategory?.name
+  );
+  const expenseModeOptions = expenseMode?.map((mode) => mode?.type);
 
   const handleInputAmount = function (
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const input = event.target.value;
-    const temp1 = input.split(",").join("");
-
-    console.log("input", typeof +temp1);
-    if (+input) {
-      const demo = (+temp1).toLocaleString("en-IN", {
-        maximumFractionDigits: 2,
-      });
-      // setAmount(input);
-      setAmount(demo);
-    }
-
-    // setAmount(input);
+    setAmount(input);
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // {
+    //     "amount":10,
+    //     "expenseDescription":"TV Repairing",
+    //     "paymentId":1,
+    //     "categoryId":5,
+    //     "subCategoryId":1
+    //     "subCategory":"demo",
+    // }
     const tempObj = {
-      expenseDate,
+      amount,
+      expenseDescription: description,
+      categoryId: 1,
+      subCategoryId: 1,
+      paymentId: 1,
+      expenseDate: dayjs(expenseDate).toDate(),
       category,
       subCategory,
       description,
       mode,
-      amount,
     };
-    console.log("form object", tempObj, event);
+    console.log("form object", tempObj);
     handleClose();
   };
 
@@ -89,7 +149,6 @@ export default function AddNewExpense({
         sx={{
           display: "flex",
           justifyContent: "center",
-          //   bgcolor: "primary.light",
         }}
       >
         Add New Expense
@@ -152,7 +211,7 @@ export default function AddNewExpense({
             setMode(newValue);
           }}
           id="expense Mode"
-          options={expenseMode}
+          options={expenseModeOptions}
           sx={{ width: "full", mt: 1 }}
           renderInput={(params) => <TextField {...params} label="Mode" />}
         />
