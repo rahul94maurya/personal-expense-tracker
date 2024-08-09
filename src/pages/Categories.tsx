@@ -5,11 +5,11 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { categoryData } from "../utilities/constants";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import CommentIcon from "@mui/icons-material/Comment";
-import IconButton from "@mui/material/IconButton";
+// import List from "@mui/material/List";
+// import ListItem from "@mui/material/ListItem";
+// import ListItemText from "@mui/material/ListItemText";
+// import CommentIcon from "@mui/icons-material/Comment";
+// import IconButton from "@mui/material/IconButton";
 
 // import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -24,6 +24,7 @@ const Categories = () => {
 
   const handleChange =
     (panel: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+      console.log("event", event);
       setExpanded(isExpanded ? panel : false);
     };
   return (
