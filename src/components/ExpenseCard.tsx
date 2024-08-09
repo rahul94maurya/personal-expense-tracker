@@ -83,7 +83,7 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
             {expense.tableData.map((ele) => (
               <ExpenseDemo key={ele.id} {...ele} />
             ))}
-            <ExpenseTable tableData={expense.tableData} />
+            {/* <ExpenseTable tableData={expense.tableData} /> */}
           </AccordionDetails>
         </Accordion>
       ))}
