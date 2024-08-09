@@ -41,7 +41,7 @@ export default function ExpenseDemo(props: any) {
                 sx={{ fontSize: "18px", fontWeight: 500 }}
                 component="div"
               >
-                {props.amount}
+                {new Intl.NumberFormat("en-IN").format(+props.amount)}
               </Typography>
             </Stack>
             <Typography
