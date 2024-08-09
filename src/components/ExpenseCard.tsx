@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import ExpenseTable from "./ExpenseTable";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
+import ExpenseDemo from "./ExpenseDemo";
 // import Chip from "@mui/material/Chip";
 
 interface ExpenseCardProps {
@@ -37,7 +38,6 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
   return (
     <Box>
       {expenseData.map((expense) => (
-        // <ExpenseTable tableData={expense.tableData} />
         <Accordion
           key={expense.id}
           expanded={expanded === expense.id}
@@ -78,7 +78,10 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
             {/* <Typography variant="body1">{expense.Title}</Typography> */}
             {/* <Typography variant="body1">{expense.Title}</Typography> */}
           </AccordionSummary>
-          <AccordionDetails>
+          <AccordionDetails sx={{ display: "grid", rowGap: 2 }}>
+            {expense.tableData.map((ele) => (
+              <ExpenseDemo key={ele.id} {...ele} />
+            ))}
             <ExpenseTable tableData={expense.tableData} />
           </AccordionDetails>
         </Accordion>

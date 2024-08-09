@@ -11,11 +11,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
-export default function ExpenseDemo() {
+export default function ExpenseDemo(props) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
-        <Stack
+        {/* <Stack
           direction="row"
           alignItems="flex-start"
           justifyContent="space-between"
@@ -27,34 +27,34 @@ export default function ExpenseDemo() {
               variant="subtitle2"
               sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
             >
-              Clothes and watches
+              {props.category}
             </Typography>
             <Typography variant="body2" component="div" lineHeight={1}>
-              (online course and certificate)
+              ({props.subCategory})
             </Typography>
           </Stack>
           <Stack alignItems="flex-end">
             <Stack direction="row" alignItems="center">
-              <CurrencyRupeeIcon />
+              <CurrencyRupeeIcon fontSize="small" />
               <Typography
                 variant="subtitle2"
                 sx={{ fontSize: "18px", fontWeight: 500 }}
                 component="div"
               >
-                1,24,343
+                {props.amount}
               </Typography>
             </Stack>
             <Typography variant="body2" component="div" lineHeight={1}>
-              (Credit Card)
+              ({props.mode})
             </Typography>
           </Stack>
-        </Stack>
-        {/* <Stack direction="row" justifyContent="space-between">
+        </Stack> */}
+        <Stack direction="row" justifyContent="space-between" mb={0.25}>
           <Typography
             component="div"
             sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
           >
-            Clothes & watches njc ncdncdns
+            {props.category}
           </Typography>
           <Stack direction="row" alignItems="center">
             <CurrencyRupeeIcon fontSize="small" />
@@ -62,7 +62,7 @@ export default function ExpenseDemo() {
               component="div"
               sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
             >
-              1,24,343
+              {props.amount}
             </Typography>
           </Stack>
         </Stack>
@@ -72,7 +72,7 @@ export default function ExpenseDemo() {
             sx={{ fontSize: "13px", lineHeight: 1.2 }}
             component="div"
           >
-            (online course and certificate)
+            ({props.subCategory})
           </Typography>
           <Typography
             component="div"
@@ -80,9 +80,9 @@ export default function ExpenseDemo() {
             justifySelf={"end"}
             sx={{ fontSize: "13px", lineHeight: 1.2 }}
           >
-            (Bank Transfer)
+            ({props.mode})
           </Typography>
-        </Stack> */}
+        </Stack>
 
         <Stack
           direction="row"
@@ -90,9 +90,7 @@ export default function ExpenseDemo() {
           justifyContent="space-between"
         >
           <Typography variant="body2" color="text.secondary">
-            Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor sit amet
-            consectetur adipisicing elit. Facere vero dolore quos debitis quam
-            illum?
+            {props.description}
           </Typography>
           <CardActions sx={{ alignSelf: "center" }}>
             <IconButton

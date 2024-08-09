@@ -70,28 +70,6 @@ const Categories = () => {
             {/* <Typography variant="body1">{expense.Title}</Typography> */}
           </AccordionSummary>
           <AccordionDetails sx={{ display: "grid", rowGap: 2 }}>
-            {/* <List
-              sx={{
-                width: "80%",
-                bgcolor: "background.paper",
-                marginX: "auto",
-              }}
-            >
-              {[1, 2, 3].map((value) => (
-                <ListItem
-                  key={value}
-                  disableGutters
-                  secondaryAction={
-                    <IconButton aria-label="comment">
-                      <CommentIcon />
-                    </IconButton>
-                  }
-                >
-                  <ListItemText primary={`Line item ${value}`} />
-                </ListItem>
-              ))}
-            </List> */}
-
             <ExpenseDemo />
             <ExpenseDemo />
             <ExpenseDemo />

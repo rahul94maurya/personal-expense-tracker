@@ -55,14 +55,14 @@ export default function Home() {
           </IconButton>
           <Stack direction={"row"} gap={5}>
             <Typography variant="h6">
-              {allMonths[selectedMonth]}, {new Date().getFullYear()}
+              {allMonths[selectedMonth]}, {24}
             </Typography>
             <Divider
               orientation="vertical"
               flexItem
               sx={{ borderRightWidth: 3, borderColor: "red" }}
             />
-            <Typography variant="h6">Total : 12,234</Typography>
+            <Typography variant="h6">12,234</Typography>
           </Stack>
           <IconButton
             aria-label="Right arrow"
