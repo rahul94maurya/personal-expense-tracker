@@ -752,3 +752,10 @@ export const allMonths = [
   "November",
   "December",
 ];
+
+export const categoryData = [
+  { id: 1, categoryName: "demo1", subCategory: ["1", "2"] },
+  { id: 2, categoryName: "demo2", subCategory: ["1", "2"] },
+  { id: 3, categoryName: "demo3", subCategory: ["1", "2"] },
+  { id: 4, categoryName: "demo4", subCategory: ["1", "2"] },
+];

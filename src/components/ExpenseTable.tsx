@@ -5,6 +5,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import IconButton from "@mui/material/IconButton";
 
 interface tableDataProps {
   id: number;
@@ -39,7 +41,7 @@ interface ExpenseTableProps {
 export default function ExpenseTable({ tableData }: ExpenseTableProps) {
   return (
     <TableContainer>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table sx={{ minWidth: 650 }} aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell align="left">Category</TableCell>
@@ -64,7 +66,24 @@ export default function ExpenseTable({ tableData }: ExpenseTableProps) {
               <TableCell align="center">{row.description}</TableCell>
               <TableCell align="center">{row.amount}</TableCell>
               <TableCell align="center" aria-label="button">
-                <EditIcon sx={{ cursor: "pointer" }} />
+                <IconButton
+                  aria-label="left arrow"
+                  size="medium"
+                  onClick={() => {
+                    console.log("edit button clicked", row.category);
+                  }}
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="left arrow"
+                  size="medium"
+                  onClick={() => {
+                    console.log("edit button clicked", row.category);
+                  }}
+                >
+                  <DeleteOutlineIcon />
+                </IconButton>
               </TableCell>
             </TableRow>
           ))}

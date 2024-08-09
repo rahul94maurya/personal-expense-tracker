@@ -39,7 +39,7 @@ export default function Home() {
 
   return (
     <Stack>
-      <Card sx={{ mb: 2, width: "100%" }}>
+      <Card sx={{ mb: 2 }}>
         <Stack
           direction="row"
           alignItems="center"

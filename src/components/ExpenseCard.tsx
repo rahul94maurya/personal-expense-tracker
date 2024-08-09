@@ -37,6 +37,7 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
   return (
     <Box>
       {expenseData.map((expense) => (
+        // <ExpenseTable tableData={expense.tableData} />
         <Accordion
           key={expense.id}
           expanded={expanded === expense.id}
