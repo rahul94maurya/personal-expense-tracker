@@ -15,13 +15,13 @@ export default function ExpenseDemo(props: any) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardContent>
-        {/* <Stack
+        <Stack
           direction="row"
           alignItems="flex-start"
           justifyContent="space-between"
-          mb={1.125}
+          mb={1}
         >
-          <Stack>
+          <Stack gap={0.5}>
             <Typography
               component="div"
               variant="subtitle2"
@@ -33,8 +33,8 @@ export default function ExpenseDemo(props: any) {
               ({props.subCategory})
             </Typography>
           </Stack>
-          <Stack alignItems="flex-end">
-            <Stack direction="row" alignItems="center">
+          <Stack>
+            <Stack direction="row" alignItems={"center"}>
               <CurrencyRupeeIcon fontSize="small" />
               <Typography
                 variant="subtitle2"
@@ -44,44 +44,15 @@ export default function ExpenseDemo(props: any) {
                 {props.amount}
               </Typography>
             </Stack>
-            <Typography variant="body2" component="div" lineHeight={1}>
+            <Typography
+              variant="body2"
+              component="div"
+              lineHeight={1}
+              alignSelf={"center"}
+            >
               ({props.mode})
             </Typography>
           </Stack>
-        </Stack> */}
-        <Stack direction="row" justifyContent="space-between" mb={0.25}>
-          <Typography
-            component="div"
-            sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
-          >
-            {props.category}
-          </Typography>
-          <Stack direction="row" alignItems="center">
-            <CurrencyRupeeIcon fontSize="small" />
-            <Typography
-              component="div"
-              sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
-            >
-              {props.amount}
-            </Typography>
-          </Stack>
-        </Stack>
-        <Stack justifyContent="space-between" direction="row">
-          <Typography
-            variant="body2"
-            sx={{ fontSize: "13px", lineHeight: 1.2 }}
-            component="div"
-          >
-            ({props.subCategory})
-          </Typography>
-          <Typography
-            component="div"
-            variant="body2"
-            justifySelf={"end"}
-            sx={{ fontSize: "13px", lineHeight: 1.2 }}
-          >
-            ({props.mode})
-          </Typography>
         </Stack>
 
         <Stack
