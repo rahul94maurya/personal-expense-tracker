@@ -60,7 +60,7 @@ export const data = [
       day: "2-digit",
       weekday: "short",
     }),
-    amount: "12,233",
+    amount: 12022,
     tableData: [
       {
         id: 1,
@@ -106,7 +106,7 @@ export const data = [
       day: "2-digit",
       weekday: "short",
     }),
-    amount: 12434,
+    amount: 1212,
     tableData: [
       {
         id: 1,
@@ -241,7 +241,7 @@ export const allMonths = [
   "Jun",
   "Jul",
   "Aug",
-  "Sept",
+  "Sep",
   "Oct",
   "Nov",
   "Dec",

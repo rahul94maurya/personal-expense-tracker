@@ -93,7 +93,7 @@ export default function AddNewExpense({
     }
   }, [category, expenseCategories]);
 
-  const expenseCategoryOptions = expenseCategories?.map(
+  const expenseCategoryOptions = expenseCategories.map(
     (expense) => expense?.name
   );
 
@@ -106,7 +106,10 @@ export default function AddNewExpense({
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const input = event.target.value;
-    setAmount(input);
+    const convertedNumber = new Intl.NumberFormat("en-IN").format(
+      +input.split(",").join("")
+    );
+    setAmount(convertedNumber);
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -116,8 +119,7 @@ export default function AddNewExpense({
     //     "expenseDescription":"TV Repairing",
     //     "paymentId":1,
     //     "categoryId":5,
-    //     "subCategoryId":1
-    //     "subCategory":"demo",
+    //     "subCategoryId":1,
     // }
     const tempObj = {
       amount,

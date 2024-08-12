@@ -36,7 +36,13 @@ export default function Home() {
   const handlePreviousMonthClick = () => {
     if (selectedMonth > 0) setSelectedMonth((pre) => pre - 1);
   };
-
+  const demo = new Date("2012-09-23").toLocaleString("default", {
+    month: "short",
+    //   year: "numeric",
+    day: "2-digit",
+    weekday: "short",
+  });
+  console.log("date", demo);
   return (
     <Stack>
       <Card sx={{ mb: 2 }}>
@@ -44,7 +50,7 @@ export default function Home() {
           direction="row"
           alignItems="center"
           justifyContent="space-between"
-          p={1.5}
+          p={1}
         >
           <IconButton
             aria-label="left arrow"
@@ -53,16 +59,18 @@ export default function Home() {
           >
             <ArrowBackIosIcon />
           </IconButton>
-          <Stack direction={"row"} gap={5}>
+          <Stack direction={"row"} gap={5} alignItems={"center"}>
             <Typography variant="h6">
               {allMonths[selectedMonth]}, {24}
             </Typography>
             <Divider
               orientation="vertical"
               flexItem
-              sx={{ borderRightWidth: 3, borderColor: "red" }}
+              sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
             />
-            <Typography variant="h6">12,234</Typography>
+            <Typography variant="h6">
+              {new Intl.NumberFormat("en-IN").format(121211)}
+            </Typography>
           </Stack>
           <IconButton
             aria-label="Right arrow"
