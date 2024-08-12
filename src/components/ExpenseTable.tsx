@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -5,9 +6,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import IconButton from "@mui/material/IconButton";
-
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 interface tableDataProps {
   id: number;
   category: string;
@@ -20,28 +21,54 @@ interface ExpenseTableProps {
   tableData: tableDataProps[];
 }
 
-// function createData(
-//   name: string,
-//   calories: number,
-//   fat: number,
-//   carbs: number,
-//   protein: number
-// ) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-// const rows = [
-//   createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-//   createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-//   createData("Eclair", 262, 16.0, 24, 6.0),
-//   createData("Cupcake", 305, 3.7, 67, 4.3),
-//   createData("Gingerbread", 356, 16.0, 49, 3.9),
-// ];
-
 export default function ExpenseTable({ tableData }: ExpenseTableProps) {
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget as HTMLButtonElement);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleExpenseEdit = function () {
+    console.log("id");
+    handleClose();
+  };
+  const handleExpenseDelete = function () {
+    handleClose();
+  };
+
   return (
-    <TableContainer>
-      <Table sx={{ minWidth: 650 }} aria-label="a dense table">
+    <TableContainer
+      sx={{ display: { xs: "none", sm: "block", md: "block", lg: "block" } }}
+    >
+      <Table
+        sx={{
+          minWidth: 600,
+        }}
+        aria-label="a dense table"
+      >
+        <Menu
+          id="demo-positioned-menu"
+          aria-labelledby="demo-positioned-button"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          anchorOrigin={{
+            vertical: "center",
+            horizontal: "left",
+          }}
+          transformOrigin={{
+            vertical: "center",
+            horizontal: "right",
+          }}
+        >
+          <MenuItem onClick={handleExpenseEdit}>Edit</MenuItem>
+          <MenuItem onClick={handleExpenseDelete}>Delete</MenuItem>
+        </Menu>
         <TableHead>
           <TableRow>
             <TableCell align="left">Category</TableCell>
@@ -69,20 +96,13 @@ export default function ExpenseTable({ tableData }: ExpenseTableProps) {
                 <IconButton
                   aria-label="left arrow"
                   size="medium"
-                  onClick={() => {
-                    console.log("edit button clicked", row.category);
-                  }}
+                  id="demo-positioned-button"
+                  aria-controls={open ? "demo-positioned-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClick}
                 >
                   <EditIcon />
-                </IconButton>
-                <IconButton
-                  aria-label="left arrow"
-                  size="medium"
-                  onClick={() => {
-                    console.log("edit button clicked", row.category);
-                  }}
-                >
-                  <DeleteOutlineIcon />
                 </IconButton>
               </TableCell>
             </TableRow>

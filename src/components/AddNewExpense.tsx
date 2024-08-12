@@ -93,7 +93,7 @@ export default function AddNewExpense({
     }
   }, [category, expenseCategories]);
 
-  const expenseCategoryOptions = expenseCategories?.map(
+  const expenseCategoryOptions = expenseCategories.map(
     (expense) => expense?.name
   );
 
