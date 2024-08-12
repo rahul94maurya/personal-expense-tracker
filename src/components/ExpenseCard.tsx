@@ -13,7 +13,7 @@ interface ExpenseCardProps {
   expenseData: {
     id: number;
     date: string;
-    amount: string | number;
+    amount: number;
     tableData: {
       id: number;
       category: string;
@@ -63,7 +63,7 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
                 justifySelf={"start"}
                 minWidth={"50%"}
               >
-                {expense.amount}
+                {new Intl.NumberFormat("en-IN").format(expense.amount)}
               </Typography>
             </Stack>
           </AccordionSummary>
