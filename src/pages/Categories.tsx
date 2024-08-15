@@ -16,7 +16,7 @@ import Box from "@mui/material/Box";
 
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import ExpenseDemo from "../components/ExpenseDemo";
+// import ExpenseDemo from "../components/ExpenseDemo";
 // import Chip from "@mui/material/Chip";
 
 const Categories = () => {
@@ -71,10 +71,6 @@ const Categories = () => {
             {/* <Typography variant="body1">{expense.Title}</Typography> */}
           </AccordionSummary>
           <AccordionDetails sx={{ display: "grid", rowGap: 2 }}>
-            <ExpenseDemo />
-            <ExpenseDemo />
-            <ExpenseDemo />
-            <ExpenseDemo />
             {/* <ExpenseTable tableData={expense.tableData} /> */}
           </AccordionDetails>
         </Accordion>
