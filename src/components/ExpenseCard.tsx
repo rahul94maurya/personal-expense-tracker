@@ -8,6 +8,7 @@ import ExpenseTable from "./ExpenseTable";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import ExpenseDemo from "./ExpenseDemo";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface ExpenseCardProps {
   expenseData: {
@@ -26,6 +27,8 @@ interface ExpenseCardProps {
 }
 
 export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
+  const isMobileView = useMediaQuery("(max-width:600px)");
+  console.log("mobile view", isMobileView);
   const [expanded, setExpanded] = useState<number | false>(false);
 
   const handleChange =
