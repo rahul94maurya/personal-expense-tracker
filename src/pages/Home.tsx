@@ -1,19 +1,10 @@
 import Fab from "@mui/material/Fab";
 import Tooltip from "@mui/material/Tooltip";
-// import Typography from "@mui/material/Typography";
 import AddIcon from "@mui/icons-material/Add";
 import { useState } from "react";
 import AddNewExpenseModal from "../components/AddNewExpense";
 import ExpenseCard from "../components/ExpenseCard";
-import {
-  Card,
-  Divider,
-  IconButton,
-  // SelectChangeEvent,
-  Stack,
-  Typography,
-  // useMediaQuery,
-} from "@mui/material";
+import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { allMonths, data } from "../utilities/constants";
@@ -25,10 +16,6 @@ export default function Home() {
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
   };
-
-  // const handleChange = (event: SelectChangeEvent) => {
-  //   setMonth(event.target.value as string);
-  // };
 
   const handleNextMonthClick = () => {
     if (selectedMonth < 11) setSelectedMonth((pre) => pre + 1);
@@ -83,8 +70,6 @@ export default function Home() {
       ) : (
         <ExpenseCard expenseData={data} />
       )}
-
-      {/* */}
 
       <Tooltip title="Add new Expense" arrow>
         <Fab
