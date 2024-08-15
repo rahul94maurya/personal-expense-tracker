@@ -12,6 +12,7 @@ import {
   // SelectChangeEvent,
   Stack,
   Typography,
+  // useMediaQuery,
 } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -20,7 +21,7 @@ import { allMonths, data } from "../utilities/constants";
 export default function Home() {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
-
+  // const isMobileView = useMediaQuery("(max-width:600px)");
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
   };
@@ -36,13 +37,7 @@ export default function Home() {
   const handlePreviousMonthClick = () => {
     if (selectedMonth > 0) setSelectedMonth((pre) => pre - 1);
   };
-  const demo = new Date("2012-09-23").toLocaleString("default", {
-    month: "short",
-    //   year: "numeric",
-    day: "2-digit",
-    weekday: "short",
-  });
-  console.log("date", demo);
+
   return (
     <Stack>
       <Card sx={{ mb: 2 }}>

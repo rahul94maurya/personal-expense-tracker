@@ -195,6 +195,7 @@ export const data = [
 export const expenseTableData = [
   {
     id: 1,
+    date: new Date(),
     category: "Home",
     subCategory: "EMI",
     mode: "UPI",
@@ -203,6 +204,7 @@ export const expenseTableData = [
   },
   {
     id: 2,
+    date: new Date(),
     category: "Bill",
     subCategory: "EMI",
     mode: "UPI",
@@ -212,6 +214,7 @@ export const expenseTableData = [
   },
   {
     id: 3,
+    date: new Date(),
     category: "Bill",
     subCategory: "EMI",
     mode: "UPI",
@@ -221,6 +224,7 @@ export const expenseTableData = [
   },
   {
     id: 4,
+    date: new Date(),
     category: "Bill",
     subCategory: "EMI",
     mode: "UPI",
