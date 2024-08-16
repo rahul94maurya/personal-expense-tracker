@@ -55,10 +55,12 @@ export const data = [
   {
     id: 1,
     date: new Date().toLocaleString("default", {
-      month: "short",
-      //   year: "numeric",
-      day: "2-digit",
-      weekday: "short",
+      dateStyle: "medium",
+      // timeZone: "",
+      // month: "short",
+      // year: "numeric",
+      // day: "2-digit",
+      // weekday: "short",
     }),
     amount: 12022,
     tableData: [

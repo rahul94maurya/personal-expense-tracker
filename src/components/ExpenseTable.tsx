@@ -9,16 +9,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-interface tableDataProps {
-  id: number;
-  category: string;
-  subCategory: string;
-  mode: string;
-  description: string;
-  amount: number;
-}
+import { Expenses } from "../pages/Home";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { Box, Stack } from "@mui/material";
+
 interface ExpenseTableProps {
-  tableData: tableDataProps[];
+  tableData: Expenses[];
 }
 
 export default function ExpenseTable({ tableData }: ExpenseTableProps) {
@@ -86,12 +82,19 @@ export default function ExpenseTable({ tableData }: ExpenseTableProps) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row" align="left">
-                {row.category}
+                {row.categoryName}
               </TableCell>
-              <TableCell align="center">{row.subCategory}</TableCell>
-              <TableCell align="center">{row.mode}</TableCell>
-              <TableCell align="center">{row.description}</TableCell>
-              <TableCell align="center">{row.amount}</TableCell>
+              <TableCell align="center">{row.subCategoryName}</TableCell>
+              <TableCell align="center">{row.paymentType}</TableCell>
+              <TableCell align="center">{row.expenseDescription}</TableCell>
+              <TableCell align="center">
+                <Stack direction="row" alignItems={"center"}>
+                  <CurrencyRupeeIcon fontSize="small" />
+                  <Box>
+                    {new Intl.NumberFormat("en-IN").format(row.expenseAmount)}
+                  </Box>
+                </Stack>
+              </TableCell>
               <TableCell align="center" aria-label="button">
                 <IconButton
                   aria-label="left arrow"

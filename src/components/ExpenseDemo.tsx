@@ -10,17 +10,16 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import { Expenses } from "../pages/Home";
 
-interface ExpenseDemoProps {
-  id: number;
-  category: string;
-  subCategory: string;
-  mode: string;
-  description: string;
-  amount: number;
-}
-
-export default function ExpenseDemo(props: ExpenseDemoProps) {
+export default function ExpenseDemo({
+  categoryName,
+  expenseAmount,
+  expenseDescription,
+  subCategoryName,
+  paymentType,
+  id,
+}: Expenses) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
 
@@ -33,7 +32,7 @@ export default function ExpenseDemo(props: ExpenseDemoProps) {
   };
 
   const handleExpenseEdit = function () {
-    console.log("id", props.id);
+    console.log("id", id);
     handleClose();
   };
   const handleExpenseDelete = function () {
@@ -73,13 +72,13 @@ export default function ExpenseDemo(props: ExpenseDemoProps) {
               variant="subtitle2"
               sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
             >
-              {props.category}
+              {categoryName}
             </Typography>
             <Typography variant="body2" component="div" lineHeight={1}>
-              ({props.subCategory})
+              ({subCategoryName})
             </Typography>
           </Stack>
-          <Stack>
+          <Stack minWidth={100}>
             <Stack direction="row" alignItems={"center"}>
               <CurrencyRupeeIcon fontSize="small" />
               <Typography
@@ -87,7 +86,7 @@ export default function ExpenseDemo(props: ExpenseDemoProps) {
                 sx={{ fontSize: "18px", fontWeight: 500 }}
                 component="div"
               >
-                {new Intl.NumberFormat("en-IN").format(+props.amount)}
+                {new Intl.NumberFormat("en-IN").format(expenseAmount)}
               </Typography>
             </Stack>
             <Typography
@@ -96,7 +95,7 @@ export default function ExpenseDemo(props: ExpenseDemoProps) {
               lineHeight={1}
               alignSelf={"center"}
             >
-              ({props.mode})
+              ({paymentType})
             </Typography>
           </Stack>
         </Stack>
@@ -107,7 +106,7 @@ export default function ExpenseDemo(props: ExpenseDemoProps) {
           justifyContent="space-between"
         >
           <Typography variant="body2" color="text.secondary">
-            {props.description}
+            {expenseDescription}
           </Typography>
           <CardActions sx={{ alignSelf: "center" }}>
             <IconButton

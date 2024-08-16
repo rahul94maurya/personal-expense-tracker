@@ -11,7 +11,7 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 const Analysis = () => {
   return (
     <>
-      <Card>
+      <Card sx={{ rowGap: 2 }}>
         <TableContainer
           sx={{
             display: { xs: "none", sm: "block", md: "block", lg: "block" },
@@ -40,10 +40,8 @@ const Analysis = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row" align="left">
-                    {row.date.toLocaleString("en-IN", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
+                    {row.date.toLocaleString("default", {
+                      dateStyle: "medium",
                     })}
                   </TableCell>
                   <TableCell align="center">{row.category}</TableCell>
@@ -65,71 +63,72 @@ const Analysis = () => {
           sx={{
             maxWidth: 600,
             display: { xs: "grid", sm: "none" },
-            rowGap: 2,
           }}
         >
           <Stack gap={0.5}>
             <Typography
               component="div"
-              variant="subtitle2"
-              sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
+              variant="h6"
+              sx={{
+                fontSize: "20px",
+                fontWeight: 500,
+                lineHeight: 1.125,
+                mb: 1.5,
+              }}
             >
-              {new Date().toLocaleString("en-IN", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "2-digit",
+              {new Date().toLocaleString("default", {
+                dateStyle: "medium",
               })}
-            </Typography>
-          </Stack>
-
-          <Stack direction={"row"}>
-            <Typography
-              variant="subtitle2"
-              sx={{ fontSize: "18px", fontWeight: 500 }}
-              component="div"
-            >
-              Home
-            </Typography>
-
-            <Typography
-              variant="body2"
-              component="div"
-              lineHeight={1}
-              alignSelf={"center"}
-            >
-              (T.V/Fridge/A.C/washing machin)
-            </Typography>
-          </Stack>
-          <Stack direction={"row"}>
-            <Stack direction="row" alignItems={"center"}>
-              <CurrencyRupeeIcon fontSize="small" />
-              <Typography
-                variant="subtitle2"
-                sx={{ fontSize: "18px", fontWeight: 500 }}
-                component="div"
-              >
-                {new Intl.NumberFormat("en-IN").format(1241212)}
-              </Typography>
-            </Stack>
-
-            <Typography
-              variant="body2"
-              component="div"
-              lineHeight={1}
-              alignSelf={"center"}
-            >
-              (Online payment and others)
             </Typography>
           </Stack>
           <Stack
             direction="row"
-            alignItems="center"
+            alignItems="flex-start"
             justifyContent="space-between"
+            mb={1}
           >
-            <Typography variant="body2" color="text.secondary">
-              this is description
-            </Typography>
+            <Stack gap={0.5}>
+              <Typography
+                component="div"
+                variant="subtitle2"
+                sx={{ fontSize: "16px", fontWeight: 500, lineHeight: 1.125 }}
+              >
+                Lorem ipsum dolor sit.
+              </Typography>
+              <Typography variant="body2" component="div" lineHeight={1}>
+                (lorem5 amet, and )
+              </Typography>
+            </Stack>
+            <Stack minWidth={100}>
+              <Stack
+                direction="row"
+                alignItems={"center"}
+                justifyContent={"center"}
+              >
+                <CurrencyRupeeIcon fontSize="small" />
+                <Typography
+                  variant="subtitle2"
+                  sx={{ fontSize: "16px", fontWeight: 500 }}
+                  component="div"
+                >
+                  {new Intl.NumberFormat("en-IN").format(12121.45)}
+                </Typography>
+              </Stack>
+              <Typography
+                variant="body2"
+                component="div"
+                lineHeight={1}
+                alignSelf={"center"}
+                fontSize={"13px"}
+              >
+                (Bank transfer)
+              </Typography>
+            </Stack>
           </Stack>
+
+          <Typography variant="body2" color="text.secondary">
+            Lorem ipsum Lorem ipsum dolor sit a.
+          </Typography>
         </CardContent>
       </Card>
     </>
