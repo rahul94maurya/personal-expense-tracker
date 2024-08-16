@@ -10,7 +10,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Expenses } from "../pages/Home";
+import { Expenses } from "../types";
 
 export default function ExpenseDemo({
   categoryName,

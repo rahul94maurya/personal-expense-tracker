@@ -9,9 +9,9 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Expenses } from "../pages/Home";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { Box, Stack } from "@mui/material";
+import { Expenses } from "../types";
 
 interface ExpenseTableProps {
   tableData: Expenses[];
