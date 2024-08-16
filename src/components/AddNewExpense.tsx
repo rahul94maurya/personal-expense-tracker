@@ -20,7 +20,7 @@ import {
   fetchExpenseCategory,
   fetchExpenseMode,
   fetchExpenseSubCategory,
-} from "../utilities/utility";
+} from "../services/api";
 
 interface AddNewExpenseProps {
   handleClose: () => void;

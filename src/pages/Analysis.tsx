@@ -4,7 +4,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { expenseTableData } from "../utilities/constants";
+import { expenseTableData } from "../data/constants";
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 

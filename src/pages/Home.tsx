@@ -7,7 +7,8 @@ import ExpenseCard from "../components/ExpenseCard";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { fetchExpenseList, generateExpenseData } from "../utilities/utility";
+import { generateExpenseData } from "../utils";
+import { fetchExpenseList } from "../services/api";
 
 export interface Expenses {
   id: number;

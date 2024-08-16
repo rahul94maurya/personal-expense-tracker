@@ -5,7 +5,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import Tooltip from "@mui/material/Tooltip";
-import { removeAuthToken } from "../utilities/utility";
+import { removeAuthToken } from "../utils";
 import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
