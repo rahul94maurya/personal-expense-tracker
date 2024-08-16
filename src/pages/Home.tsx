@@ -1,18 +1,47 @@
 import Fab from "@mui/material/Fab";
 import Tooltip from "@mui/material/Tooltip";
 import AddIcon from "@mui/icons-material/Add";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddNewExpenseModal from "../components/AddNewExpense";
 import ExpenseCard from "../components/ExpenseCard";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { allMonths, data } from "../utilities/constants";
+import { fetchExpenseList, generateExpenseData } from "../utilities/utility";
+
+export interface Expenses {
+  id: number;
+  expenseAmount: number;
+  expenseDescription: string;
+  categoryName: string;
+  subCategoryName: string;
+  paymentType: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface DayExpense {
+  date: string;
+  id: string;
+  totalExpenseOfTheDay: number;
+  expenses: Expenses[];
+}
+export interface ExpenseData {
+  currentMonth: string;
+  currentYear: string;
+  totalAmount: number;
+  dayWiseExpense: DayExpense[];
+}
 
 export default function Home() {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   // const isMobileView = useMediaQuery("(max-width:600px)");
+
+  // const [expenseList, setExpenseList] = useState<Expenses[]>([]);
+  const [expenseData, setExpenseData] = useState<ExpenseData>();
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
   };
@@ -24,7 +53,23 @@ export default function Home() {
   const handlePreviousMonthClick = () => {
     if (selectedMonth > 0) setSelectedMonth((pre) => pre - 1);
   };
+  const getExpensList = async function () {
+    setIsLoading(true);
+    const expenses: Expenses[] = await fetchExpenseList();
+    // setExpenseList(expenses);
+    const expenseData = generateExpenseData(expenses);
+    setExpenseData(expenseData);
+    setIsLoading(false);
+    console.log(expenseData);
+  };
 
+  useEffect(() => {
+    getExpensList();
+  }, []);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <Stack>
       <Card sx={{ mb: 2 }}>
@@ -43,7 +88,8 @@ export default function Home() {
           </IconButton>
           <Stack direction={"row"} gap={5} alignItems={"center"}>
             <Typography variant="h6">
-              {allMonths[selectedMonth]}, {24}
+              {/* {allMonths[selectedMonth]}, {24} */}
+              {expenseData?.currentMonth}, {expenseData?.currentYear}
             </Typography>
             <Divider
               orientation="vertical"
@@ -51,7 +97,9 @@ export default function Home() {
               sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
             />
             <Typography variant="h6">
-              {new Intl.NumberFormat("en-IN").format(121211)}
+              {new Intl.NumberFormat("en-IN").format(
+                expenseData?.totalAmount as number
+              )}
             </Typography>
           </Stack>
           <IconButton
@@ -63,13 +111,14 @@ export default function Home() {
           </IconButton>
         </Stack>
       </Card>
-      {data.length === 0 ? (
+      {!expenseData?.dayWiseExpense ? (
         <Stack justifyContent="center">
           No expense Found. Please add a expense
         </Stack>
       ) : (
-        <ExpenseCard expenseData={data} />
+        <></>
       )}
+      <ExpenseCard expenseData={expenseData?.dayWiseExpense ?? []} />
 
       <Tooltip title="Add new Expense" arrow>
         <Fab

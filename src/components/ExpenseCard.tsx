@@ -8,27 +8,17 @@ import ExpenseTable from "./ExpenseTable";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import ExpenseDemo from "./ExpenseDemo";
-import useMediaQuery from "@mui/material/useMediaQuery";
+// import useMediaQuery from "@mui/material/useMediaQuery";
+import { DayExpense } from "../pages/Home";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 
 interface ExpenseCardProps {
-  expenseData: {
-    id: number;
-    date: string;
-    amount: number;
-    tableData: {
-      id: number;
-      category: string;
-      subCategory: string;
-      mode: string;
-      description: string;
-      amount: number;
-    }[];
-  }[];
+  expenseData: DayExpense[];
 }
 
 export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
-  const isMobileView = useMediaQuery("(max-width:600px)");
-  console.log("mobile view", isMobileView);
+  // const isMobileView = useMediaQuery("(max-width:600px)");
+
   const [expanded, setExpanded] = useState<number | false>(false);
 
   const handleChange =
@@ -37,11 +27,11 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
     };
   return (
     <Box>
-      {expenseData.map((expense) => (
+      {expenseData?.map((expense) => (
         <Accordion
           key={expense.id}
-          expanded={expanded === expense.id}
-          onChange={handleChange(expense.id)}
+          expanded={expanded === +expense.id}
+          onChange={handleChange(+expense.id)}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -59,15 +49,22 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
                 justifySelf={"start"}
                 minWidth={"50%"}
               >
-                {expense.date}
+                {new Date(expense.date).toLocaleString("default", {
+                  dateStyle: "medium",
+                })}
               </Typography>
-              <Typography
-                variant="body1"
-                justifySelf={"start"}
-                minWidth={"50%"}
-              >
-                {new Intl.NumberFormat("en-IN").format(expense.amount)}
-              </Typography>
+              <Stack direction="row" alignItems={"center"}>
+                <CurrencyRupeeIcon fontSize="small" />
+                <Typography
+                  variant="body1"
+                  justifySelf={"start"}
+                  minWidth={"50%"}
+                >
+                  {new Intl.NumberFormat("en-IN").format(
+                    expense.totalExpenseOfTheDay
+                  )}
+                </Typography>
+              </Stack>
             </Stack>
           </AccordionSummary>
           <AccordionDetails
@@ -76,10 +73,10 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
               rowGap: 2,
             }}
           >
-            {expense.tableData.map((ele) => (
+            {expense.expenses.map((ele) => (
               <ExpenseDemo key={ele.id} {...ele} />
             ))}
-            <ExpenseTable tableData={expense.tableData} />
+            <ExpenseTable tableData={expense.expenses} />
           </AccordionDetails>
         </Accordion>
       ))}
