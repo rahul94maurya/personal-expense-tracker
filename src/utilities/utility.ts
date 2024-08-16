@@ -15,7 +15,7 @@ export const removeAuthToken = function () {
   localStorage.removeItem("authToken");
 };
 
-export const groupDuplicateDates = function (dates) {
+export const groupDuplicateDates = function (dates: any) {
   const result: any = {};
 
   dates.forEach((date: any) => {
