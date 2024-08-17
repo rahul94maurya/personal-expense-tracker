@@ -20,7 +20,7 @@ import {
   fetchExpenseCategory,
   fetchExpenseMode,
   fetchExpenseSubCategory,
-} from "../services/api";
+} from "../services";
 import {
   AddNewExpenseProps,
   ExpenseCategory,
