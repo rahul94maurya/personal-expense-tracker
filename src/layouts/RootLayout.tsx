@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { getAuthStatus } from "../utilities/utility";
+import { getAuthStatus } from "../utils";
 
 import MainLayout from "./MainLayout";
 

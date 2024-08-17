@@ -1,4 +1,4 @@
-import { fetchLoginStatus } from "../utilities/utility";
+import { fetchLoginStatus } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";

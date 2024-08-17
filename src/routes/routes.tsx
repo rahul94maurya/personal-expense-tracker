@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
-import LoginPage from "./pages/Login";
-import RootLayout from "./layouts/RootLayout";
-import HomePage from "./pages/Home";
-import DashboardPage from "./pages/Dashboard";
-import AnalysisPage from "./pages/Analysis";
-import CategoriesPage from "./pages/Categories";
+import LoginPage from "../pages/Login";
+import RootLayout from "../layouts/RootLayout";
+import HomePage from "../pages/Home";
+import DashboardPage from "../pages/Dashboard";
+import AnalysisPage from "../pages/Analysis";
+import CategoriesPage from "../pages/Categories";
 
 export const routes = createBrowserRouter([
   {

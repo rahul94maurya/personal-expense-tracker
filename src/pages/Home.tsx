@@ -2,36 +2,14 @@ import Fab from "@mui/material/Fab";
 import Tooltip from "@mui/material/Tooltip";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
-import AddNewExpenseModal from "../components/AddNewExpense";
+import AddNewExpenseModal from "../features/addExpense/components/AddNewExpense";
 import ExpenseCard from "../components/ExpenseCard";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { fetchExpenseList, generateExpenseData } from "../utilities/utility";
-
-export interface Expenses {
-  id: number;
-  expenseAmount: number;
-  expenseDescription: string;
-  categoryName: string;
-  subCategoryName: string;
-  paymentType: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface DayExpense {
-  date: string;
-  id: string;
-  totalExpenseOfTheDay: number;
-  expenses: Expenses[];
-}
-export interface ExpenseData {
-  currentMonth: string;
-  currentYear: string;
-  totalAmount: number;
-  dayWiseExpense: DayExpense[];
-}
+import { generateExpenseData } from "../utils";
+import { fetchExpenseList } from "../services/api";
+import { ExpenseData, Expenses } from "../types";
 
 export default function Home() {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);

@@ -20,29 +20,13 @@ import {
   fetchExpenseCategory,
   fetchExpenseMode,
   fetchExpenseSubCategory,
-} from "../utilities/utility";
-
-interface AddNewExpenseProps {
-  handleClose: () => void;
-  openModal: boolean;
-}
-
-interface ExpenseSubcategory {
-  id: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
-interface ExpenseCategory extends ExpenseSubcategory {
-  userId: number;
-}
-interface ExpenseMode {
-  id: number;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-  active: boolean;
-}
+} from "../services/api";
+import {
+  AddNewExpenseProps,
+  ExpenseCategory,
+  ExpenseMode,
+  ExpenseSubcategory,
+} from "../types";
 
 export default function AddNewExpense({
   handleClose,

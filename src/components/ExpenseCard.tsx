@@ -9,8 +9,9 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import ExpenseDemo from "./ExpenseDemo";
 // import useMediaQuery from "@mui/material/useMediaQuery";
-import { DayExpense } from "../pages/Home";
+
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { DayExpense } from "../types";
 
 interface ExpenseCardProps {
   expenseData: DayExpense[];

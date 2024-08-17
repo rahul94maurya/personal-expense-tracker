@@ -21,6 +21,7 @@ const navigationLinks = [
     icon: <HomeRepairServiceIcon />,
   },
 ];
+
 const MainNavigation = () => {
   return (
     <div>
