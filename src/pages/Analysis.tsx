@@ -7,6 +7,7 @@ import TableRow from "@mui/material/TableRow";
 import { expenseTableData } from "../data/constants";
 import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import { formatAmount } from "../utils";
 
 const Analysis = () => {
   return (
@@ -111,7 +112,7 @@ const Analysis = () => {
                   sx={{ fontSize: "16px", fontWeight: 500 }}
                   component="div"
                 >
-                  {new Intl.NumberFormat("en-IN").format(12121.45)}
+                  {formatAmount(12124.78)}
                 </Typography>
               </Stack>
               <Typography

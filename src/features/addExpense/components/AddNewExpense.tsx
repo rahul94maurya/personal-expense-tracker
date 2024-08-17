@@ -90,9 +90,7 @@ export default function AddNewExpense({
     event: React.ChangeEvent<HTMLInputElement>
   ) {
     const input = event.target.value;
-    const convertedNumber = new Intl.NumberFormat("en-IN").format(
-      +input.split(",").join("")
-    );
+    const convertedNumber = new Intl.NumberFormat("en-IN").format(+input);
     setAmount(convertedNumber);
   };
 

@@ -10,9 +10,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Expenses } from "../types";
+import { Expenses } from "../../../types";
+import { formatAmount } from "../../../utils";
 
-export default function ExpenseDemo({
+export default function ExpenseCard({
   categoryName,
   expenseAmount,
   expenseDescription,
@@ -79,14 +80,18 @@ export default function ExpenseDemo({
             </Typography>
           </Stack>
           <Stack minWidth={100}>
-            <Stack direction="row" alignItems={"center"}>
+            <Stack
+              direction="row"
+              alignItems={"center"}
+              justifyContent={"center"}
+            >
               <CurrencyRupeeIcon fontSize="small" />
               <Typography
                 variant="subtitle2"
                 sx={{ fontSize: "18px", fontWeight: 500 }}
                 component="div"
               >
-                {new Intl.NumberFormat("en-IN").format(expenseAmount)}
+                {formatAmount(expenseAmount)}
               </Typography>
             </Stack>
             <Typography
