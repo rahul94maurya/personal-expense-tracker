@@ -7,17 +7,25 @@ import Expenses from "../features/expenses/components/Expenses";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { formatAmount, generateExpenseData } from "../utils";
-import { fetchExpenseList } from "../services/api";
-import { ExpenseData, Expenses as ExpensesType } from "../types";
+import { formatAmount } from "../utils";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import {
+  selectExpenseData,
+  selectLoadingStatus,
+  // selectErrorMessage,
+} from "../features/expenses/slices/expenseSlice";
+import { fetchExpenseList } from "../features/expenses/services";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 export default function Home() {
+  const loadingStatus = useAppSelector(selectLoadingStatus);
+  const expenseData = useAppSelector(selectExpenseData);
+  // const error = useAppSelector(selectErrorMessage);
+  const dispatch = useAppDispatch();
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   // const isMobileView = useMediaQuery("(max-width:600px)");
-
-  const [expenseData, setExpenseData] = useState<ExpenseData>();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
@@ -30,20 +38,25 @@ export default function Home() {
   const handlePreviousMonthClick = () => {
     if (selectedMonth > 0) setSelectedMonth((pre) => pre - 1);
   };
-  const getExpensList = async function () {
-    setIsLoading(true);
-    const expenses: ExpensesType[] = await fetchExpenseList();
-    const expenseData = generateExpenseData(expenses);
-    setExpenseData(expenseData);
-    setIsLoading(false);
-  };
 
   useEffect(() => {
-    getExpensList();
+    dispatch(fetchExpenseList());
   }, []);
 
-  if (isLoading) {
-    return <h1>Loading...</h1>;
+  if (loadingStatus === "loading") {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          width: "100%",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <CircularProgress size={70} />
+      </Box>
+    );
   }
   return (
     <Stack>

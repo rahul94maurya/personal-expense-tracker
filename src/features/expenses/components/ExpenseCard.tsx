@@ -10,8 +10,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Expenses } from "../../../types";
 import { formatAmount } from "../../../utils";
+import { ExpensesType } from "../types";
 
 export default function ExpenseCard({
   categoryName,
@@ -20,7 +20,7 @@ export default function ExpenseCard({
   subCategoryName,
   paymentType,
   id,
-}: Expenses) {
+}: ExpensesType) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
 
