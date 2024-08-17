@@ -1,4 +1,3 @@
-import { fetchLoginStatus } from "../utils";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -13,6 +12,7 @@ import Container from "@mui/material/Container";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
+import { fetchLoginStatus } from "../services/api";
 
 const Login = () => {
   const navigate = useNavigate();
