@@ -1,4 +1,4 @@
-import { Expenses } from "../pages/Home";
+import { Expenses } from "../types";
 
 export const getAuthStatus = function () {
   return localStorage.getItem("authToken");
