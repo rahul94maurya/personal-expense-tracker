@@ -1,3 +1,3 @@
-import { AddNewExpense } from "../expenseList";
+import AddNewExpenseModal from "./components/AddNewExpense";
 
-export { AddNewExpense };
+export { AddNewExpenseModal };

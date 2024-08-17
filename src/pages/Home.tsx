@@ -2,21 +2,20 @@ import Fab from "@mui/material/Fab";
 import Tooltip from "@mui/material/Tooltip";
 import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
-import AddNewExpenseModal from "../features/addExpense/components/AddNewExpense";
-import ExpenseCard from "../components/ExpenseCard";
+import { AddNewExpenseModal } from "../features/addExpense";
+import Expenses from "../features/expenses/components/Expenses";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { generateExpenseData } from "../utils";
+import { formatAmount, generateExpenseData } from "../utils";
 import { fetchExpenseList } from "../services/api";
-import { ExpenseData, Expenses } from "../types";
+import { ExpenseData, Expenses as ExpensesType } from "../types";
 
 export default function Home() {
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   // const isMobileView = useMediaQuery("(max-width:600px)");
 
-  // const [expenseList, setExpenseList] = useState<Expenses[]>([]);
   const [expenseData, setExpenseData] = useState<ExpenseData>();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -33,12 +32,10 @@ export default function Home() {
   };
   const getExpensList = async function () {
     setIsLoading(true);
-    const expenses: Expenses[] = await fetchExpenseList();
-    // setExpenseList(expenses);
+    const expenses: ExpensesType[] = await fetchExpenseList();
     const expenseData = generateExpenseData(expenses);
     setExpenseData(expenseData);
     setIsLoading(false);
-    console.log(expenseData);
   };
 
   useEffect(() => {
@@ -75,9 +72,7 @@ export default function Home() {
               sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
             />
             <Typography variant="h6">
-              {new Intl.NumberFormat("en-IN").format(
-                expenseData?.totalAmount as number
-              )}
+              {formatAmount(expenseData?.totalAmount as number)}
             </Typography>
           </Stack>
           <IconButton
@@ -96,7 +91,7 @@ export default function Home() {
       ) : (
         <></>
       )}
-      <ExpenseCard expenseData={expenseData?.dayWiseExpense ?? []} />
+      <Expenses expenseData={expenseData?.dayWiseExpense ?? []} />
 
       <Tooltip title="Add new Expense" arrow>
         <Fab

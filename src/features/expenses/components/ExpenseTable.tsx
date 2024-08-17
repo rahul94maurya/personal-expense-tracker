@@ -11,11 +11,8 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { Box, Stack } from "@mui/material";
-import { Expenses } from "../types";
-
-interface ExpenseTableProps {
-  tableData: Expenses[];
-}
+import { ExpenseTableProps } from "../types";
+import { formatAmount } from "../../../utils";
 
 export default function ExpenseTable({ tableData }: ExpenseTableProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -88,11 +85,13 @@ export default function ExpenseTable({ tableData }: ExpenseTableProps) {
               <TableCell align="center">{row.paymentType}</TableCell>
               <TableCell align="center">{row.expenseDescription}</TableCell>
               <TableCell align="center">
-                <Stack direction="row" alignItems={"center"}>
+                <Stack
+                  direction="row"
+                  alignItems={"center"}
+                  justifyContent={"center"}
+                >
                   <CurrencyRupeeIcon fontSize="small" />
-                  <Box>
-                    {new Intl.NumberFormat("en-IN").format(row.expenseAmount)}
-                  </Box>
+                  <Box>{formatAmount(row.expenseAmount)}</Box>
                 </Stack>
               </TableCell>
               <TableCell align="center" aria-label="button">

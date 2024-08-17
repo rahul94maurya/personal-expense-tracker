@@ -57,3 +57,7 @@ export const generateExpenseData = function (expenses: Expenses[]) {
   expenseData.dayWiseExpense = dayWiseExpense;
   return expenseData;
 };
+
+export const formatAmount = function (amount: number) {
+  return new Intl.NumberFormat("en-IN").format(amount);
+};

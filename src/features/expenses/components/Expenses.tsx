@@ -4,20 +4,15 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
-import ExpenseTable from "./ExpenseTable";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import ExpenseDemo from "./ExpenseDemo";
-// import useMediaQuery from "@mui/material/useMediaQuery";
-
+import ExpenseDemo from "./ExpenseCard";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import { DayExpense } from "../types";
+import { ExpenseCardProps } from "../types";
+import ExpenseTable from "./ExpenseTable";
+import { formatAmount } from "../../../utils";
 
-interface ExpenseCardProps {
-  expenseData: DayExpense[];
-}
-
-export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
+export default function Expenses({ expenseData }: ExpenseCardProps) {
   // const isMobileView = useMediaQuery("(max-width:600px)");
 
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -61,9 +56,7 @@ export default function ExpenseCard({ expenseData }: ExpenseCardProps) {
                   justifySelf={"start"}
                   minWidth={"50%"}
                 >
-                  {new Intl.NumberFormat("en-IN").format(
-                    expense.totalExpenseOfTheDay
-                  )}
+                  {formatAmount(expense.totalExpenseOfTheDay)}
                 </Typography>
               </Stack>
             </Stack>
