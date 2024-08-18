@@ -1,3 +1,5 @@
+import { StatusType } from "../../../types";
+
 export interface ExpensesType {
   id: number;
   expenseAmount: number;
@@ -30,7 +32,7 @@ export interface ExpenseTableProps {
 }
 
 export type InitialExpenseType = {
-  status: "idle" | "loading" | "success" | "error";
+  status: StatusType;
   error: null | string;
   expenseList: ExpensesType[];
   expenseData: ExpenseDataType;
