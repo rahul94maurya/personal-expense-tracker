@@ -1,45 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
-import Autocomplete from "@mui/material/Autocomplete";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputAdornment from "@mui/material/InputAdornment";
-import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-import dayjs, { Dayjs } from "dayjs";
-import { DemoItem } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import {
-  fetchExpenseCategory,
-  fetchExpenseMode,
-  fetchExpenseSubCategory,
-} from "../services";
 import {
   AddNewExpenseProps,
   ExpenseCategory,
   ExpenseMode,
   ExpenseSubcategory,
-} from "../types";
+} from "../../addExpense/types";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import Autocomplete from "@mui/material/Autocomplete";
+import {
+  fetchExpenseCategory,
+  fetchExpenseMode,
+  fetchExpenseSubCategory,
+} from "../../addExpense/services";
+import TextField from "@mui/material/TextField";
+// import FormControl from "@mui/material/FormControl";
+// import InputLabel from "@mui/material/InputLabel";
+// import OutlinedInput from "@mui/material/OutlinedInput";
+// import InputAdornment from "@mui/material/InputAdornment";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 
-export default function AddNewExpense({
-  handleClose,
-  openModal,
-}: AddNewExpenseProps) {
+const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
   const [category, setCategory] = useState<string | null>(null);
   const [subCategory, setSubCategory] = useState<string | null>(null);
   const [mode, setMode] = useState<string | null>(null);
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-  const [expenseDate, setExpenseDate] = useState<Dayjs | null>(
-    dayjs(new Date())
-  );
+  //   const [amount, setAmount] = useState("");
+
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
     []
   );
@@ -72,14 +61,6 @@ export default function AddNewExpense({
   );
   const expenseModeOptions = expenseMode?.map((mode) => mode?.type);
 
-  const handleInputAmount = function (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const input = event.target.value;
-    const convertedNumber = new Intl.NumberFormat("en-IN").format(+input);
-    setAmount(convertedNumber);
-  };
-
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     // {
@@ -89,19 +70,8 @@ export default function AddNewExpense({
     //     "categoryId":5,
     //     "subCategoryId":1,
     // }
-    const tempObj = {
-      amount,
-      expenseDescription: description,
-      categoryId: 1,
-      subCategoryId: 1,
-      paymentId: 1,
-      expenseDate: dayjs(expenseDate).toDate(),
-      category,
-      subCategory,
-      description,
-      mode,
-    };
-    console.log("form object", tempObj);
+
+    console.log("form object");
     handleClose();
   };
   useEffect(() => {
@@ -137,7 +107,7 @@ export default function AddNewExpense({
         Add New Expense
       </DialogTitle>
       <DialogContent>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoItem sx={{ mt: 1 }}>
             <DatePicker
               format="DD/MM/YYYY"
@@ -146,7 +116,7 @@ export default function AddNewExpense({
               onChange={(newValue) => setExpenseDate(newValue)}
             />
           </DemoItem>
-        </LocalizationProvider>
+        </LocalizationProvider> */}
         <Autocomplete
           value={category}
           onChange={(_, newValue: string | null) => {
@@ -198,7 +168,7 @@ export default function AddNewExpense({
           sx={{ width: "full", mt: 1 }}
           renderInput={(params) => <TextField {...params} label="Mode" />}
         />
-        <FormControl fullWidth sx={{ mt: "0.7rem" }}>
+        {/* <FormControl fullWidth sx={{ mt: "0.7rem" }}>
           <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>
           <OutlinedInput
             id="outlined-adornment-amount"
@@ -212,7 +182,7 @@ export default function AddNewExpense({
             }
             label="Amount"
           />
-        </FormControl>
+        </FormControl> */}
       </DialogContent>
       <DialogActions
         sx={{
@@ -235,4 +205,6 @@ export default function AddNewExpense({
       </DialogActions>
     </Dialog>
   );
-}
+};
+
+export default Filters;

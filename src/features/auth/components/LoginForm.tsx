@@ -19,6 +19,7 @@ import {
 } from "../slices/authSlice";
 import { UserType } from "../types";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -101,7 +102,7 @@ const LoginForm = () => {
             sx={{ mt: 3, mb: 2 }}
             disabled={isLoading}
           >
-            {!isLoading ? "Log In" : "Loading..."}
+            {!isLoading ? "Log In" : <CircularProgress size={25} />}
           </Button>
         </Box>
       </Box>

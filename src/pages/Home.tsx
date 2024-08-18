@@ -12,7 +12,6 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import {
   selectExpenseData,
   selectLoadingStatus,
-  // selectErrorMessage,
 } from "../features/expenses/slices/expenseSlice";
 import { fetchExpenseList } from "../features/expenses/services";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -41,7 +40,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(fetchExpenseList());
-  }, []);
+  }, [dispatch]);
 
   if (loadingStatus === "loading") {
     return (
@@ -54,7 +53,7 @@ export default function Home() {
           alignItems: "center",
         }}
       >
-        <CircularProgress size={70} />
+        <CircularProgress />
       </Box>
     );
   }
@@ -119,7 +118,7 @@ export default function Home() {
             right: "3rem",
           }}
         >
-          <AddIcon />
+          <AddIcon fontSize="large" />
         </Fab>
       </Tooltip>
       {openExpenseModal && (

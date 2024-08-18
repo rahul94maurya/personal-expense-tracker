@@ -52,4 +52,5 @@ export const {
   selectExpenseList,
   selectExpenseData,
 } = expenseSlice.selectors;
+
 export default expenseSlice.reducer;
