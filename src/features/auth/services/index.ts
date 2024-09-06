@@ -1,20 +1,21 @@
 import axios, { AxiosError } from "axios";
 import { BASE_URL } from "../../../data/constants";
-import { getAuthStatus } from "../../../utils";
+import { setAuthToken } from "../../../utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { LoginDetailsType } from "../types";
 
-export const fetchExpenseList = createAsyncThunk(
-  "expenses/fetchExpenseList",
-  async (_, { rejectWithValue }) => {
+export const fetchLoginStatus = createAsyncThunk(
+  "auth/fetchLoginStatus",
+  async (loginDetails: LoginDetailsType, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/expense`, {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + getAuthStatus(),
-        },
-      });
-      const expenseList = response.data;
-      return expenseList;
+      const response = await axios.post(
+        `${BASE_URL}/api/auth/signin`,
+        loginDetails
+      );
+      console.log("response: " + JSON.stringify(response));
+      const userData = response.data;
+      setAuthToken(userData.accessToken);
+      return userData;
     } catch (err) {
       const error = err as AxiosError;
       // used this AxiosError type to get the TS support
@@ -47,15 +48,11 @@ export const fetchExpenseList = createAsyncThunk(
   }
 );
 
-// export const fetchExpenseList = async function () {
+// export const fetchLoginStatus = async function (data: LoginDetail) {
 //   try {
-//     const response = await axios.get(`${BASE_URL}/api/expense`, {
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: "Bearer " + getAuthStatus(),
-//       },
-//     });
+//     const response = await axios.post(`${BASE_URL}/api/auth/signin`, data);
 //     const userData = response.data;
+//     setAuthToken(userData.accessToken);
 //     return userData;
 //   } catch (err) {
 //     const error = err as AxiosError;

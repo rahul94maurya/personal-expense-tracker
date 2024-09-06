@@ -1,13 +1,7 @@
 import Drawer from "@mui/material/Drawer";
 
 import MainNavigation from "./MainNavigation";
-
-interface DrawerProps {
-  drawerWidth: number;
-  mobileOpen: boolean;
-  handleTransitionEnd: () => void;
-  handleClose: () => void;
-}
+import { DrawerProps } from "../types";
 
 const ResponsiveDrawer = ({
   drawerWidth,

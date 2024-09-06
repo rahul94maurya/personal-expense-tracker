@@ -1,5 +1,3 @@
-import { Expenses } from "../types";
-
 export const getAuthStatus = function () {
   return localStorage.getItem("authToken");
 };
@@ -25,7 +23,7 @@ export const groupDuplicateDates = function (dates: any) {
   return result;
 };
 
-export const generateExpenseData = function (expenses: Expenses[]) {
+export const generateExpenseData = function (expenses: any[]) {
   const expenseData: any = {};
   const totalAmount = expenses.reduce(
     (acc, expense) => acc + expense.expenseAmount,

@@ -6,7 +6,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import ExpenseDemo from "./ExpenseCard";
+import ExpenseCard from "./ExpenseCard";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { ExpenseCardProps } from "../types";
 import ExpenseTable from "./ExpenseTable";
@@ -68,7 +68,7 @@ export default function Expenses({ expenseData }: ExpenseCardProps) {
             }}
           >
             {expense.expenses.map((ele) => (
-              <ExpenseDemo key={ele.id} {...ele} />
+              <ExpenseCard key={ele.id} {...ele} />
             ))}
             <ExpenseTable tableData={expense.expenses} />
           </AccordionDetails>

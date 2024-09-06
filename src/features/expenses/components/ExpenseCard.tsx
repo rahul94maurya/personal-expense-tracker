@@ -10,8 +10,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { Expenses } from "../../../types";
 import { formatAmount } from "../../../utils";
+import { ExpensesType } from "../types";
 
 export default function ExpenseCard({
   categoryName,
@@ -20,7 +20,7 @@ export default function ExpenseCard({
   subCategoryName,
   paymentType,
   id,
-}: Expenses) {
+}: ExpensesType) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
 
@@ -71,11 +71,16 @@ export default function ExpenseCard({
             <Typography
               component="div"
               variant="subtitle2"
-              sx={{ fontSize: "18px", fontWeight: 500, lineHeight: 1.125 }}
+              sx={{ fontSize: "16px", fontWeight: 500, lineHeight: 1.125 }}
             >
               {categoryName}
             </Typography>
-            <Typography variant="body2" component="div" lineHeight={1}>
+            <Typography
+              variant="body2"
+              component="div"
+              lineHeight={1}
+              fontSize={"13px"}
+            >
               ({subCategoryName})
             </Typography>
           </Stack>
@@ -88,7 +93,7 @@ export default function ExpenseCard({
               <CurrencyRupeeIcon fontSize="small" />
               <Typography
                 variant="subtitle2"
-                sx={{ fontSize: "18px", fontWeight: 500 }}
+                sx={{ fontSize: "16px", fontWeight: 500 }}
                 component="div"
               >
                 {formatAmount(expenseAmount)}
@@ -99,12 +104,12 @@ export default function ExpenseCard({
               component="div"
               lineHeight={1}
               alignSelf={"center"}
+              fontSize={"13px"}
             >
               ({paymentType})
             </Typography>
           </Stack>
         </Stack>
-
         <Stack
           direction="row"
           alignItems="center"

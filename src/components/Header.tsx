@@ -7,16 +7,16 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import { removeAuthToken } from "../utils";
 import { useNavigate } from "react-router-dom";
-
-interface HeaderProps {
-  drawerWidth: number;
-  handleToggle: () => void;
-}
+import { useAppDispatch } from "../hooks";
+import { logout } from "../features/auth/slices/authSlice";
+import { HeaderProps } from "../types";
 
 const Header = ({ drawerWidth, handleToggle }: HeaderProps) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleLogout = function () {
     removeAuthToken();
+    dispatch(logout());
     navigate("/login");
   };
 
