@@ -49,7 +49,7 @@ const Analysis = () => {
         <ExpenseCard key={ele.id} {...ele} />
       ))}
       <ExpenseTable tableData={expenseList} />
-      <Tooltip title="Add new Expense" arrow>
+      <Tooltip title="Filter" arrow>
         <Fab
           onClick={() => {
             setOpenFilterModal(true);

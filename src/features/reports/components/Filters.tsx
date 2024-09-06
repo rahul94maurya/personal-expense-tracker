@@ -23,7 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
 const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
-  const [category, setCategory] = useState<string | null>(null);
+  const [category, setCategory] = useState<string | null>("All");
   const [subCategory, setSubCategory] = useState<string | null>(null);
   const [mode, setMode] = useState<string | null>(null);
   const [description, setDescription] = useState("");
@@ -60,6 +60,7 @@ const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
     (subCategory) => subCategory?.name
   );
   const expenseModeOptions = expenseMode?.map((mode) => mode?.type);
+  expenseCategoryOptions.push("All");
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -104,7 +105,7 @@ const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
           justifyContent: "center",
         }}
       >
-        Add New Expense
+        Filter Your Expense
       </DialogTitle>
       <DialogContent>
         {/* <LocalizationProvider dateAdapter={AdapterDayjs}>

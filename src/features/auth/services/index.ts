@@ -12,6 +12,7 @@ export const fetchLoginStatus = createAsyncThunk(
         `${BASE_URL}/api/auth/signin`,
         loginDetails
       );
+      console.log("response: " + JSON.stringify(response));
       const userData = response.data;
       setAuthToken(userData.accessToken);
       return userData;
