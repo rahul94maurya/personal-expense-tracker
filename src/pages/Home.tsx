@@ -9,6 +9,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { formatAmount } from "../utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import axios from "axios";
 import {
   selectExpenseData,
   selectLoadingStatus,
@@ -39,8 +40,18 @@ export default function Home() {
   };
 
   useEffect(() => {
-    dispatch(fetchExpenseList());
+    // dispatch(fetchExpenseList());
   }, [dispatch]);
+
+useEffect(()=>{
+const fetchData=async()=>{
+  const respons=await axios.get(`http://localhost:3000`)
+  console.log(respons.data)
+}
+
+fetchData()
+
+},[])
 
   if (loadingStatus === "loading") {
     return (

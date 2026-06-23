@@ -24,7 +24,7 @@ const Analysis = () => {
     setOpenFilterModal(false);
   };
   useEffect(() => {
-    if (expenseList.length === 0) dispatch(fetchExpenseList());
+    // if (expenseList.length === 0) dispatch(fetchExpenseList());
   }, [dispatch, expenseList]);
 
   if (loadingStatus === "loading") {

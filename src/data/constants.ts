@@ -238,6 +238,8 @@ export const expenseTableData = [
 export const BASE_URL =
   "https://expense-tracker-production-6b8d.up.railway.app";
 
+// export const BASE_URL=""
+
 export const allMonths = [
   "Jan",
   "Feb",

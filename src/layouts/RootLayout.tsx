@@ -4,7 +4,8 @@ import { getAuthStatus } from "../utils";
 import MainLayout from "./MainLayout";
 
 const RootLayout = () => {
-  const authStatus = getAuthStatus();
+  // const authStatus = getAuthStatus();
+  const authStatus=true
 
   return authStatus ? <MainLayout /> : <Navigate to="login" />;
 };

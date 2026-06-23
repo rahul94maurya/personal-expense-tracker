@@ -12,8 +12,8 @@ import SummarizeIcon from "@mui/icons-material/Summarize";
 import Typography from "@mui/material/Typography";
 
 const navigationLinks = [
-  { label: "Home", path: "/home", icon: <HomeIcon /> },
-  { label: "Dashboard", path: "/", icon: <SummarizeIcon /> },
+  { label: "Home", path: "/", icon: <HomeIcon /> },
+  { label: "Dashboard", path: "/dashboard", icon: <SummarizeIcon /> },
   { label: "Analysis", path: "/analysis", icon: <HomeRepairServiceIcon /> },
   {
     label: "Categories",
