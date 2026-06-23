@@ -27,6 +27,7 @@ import {
   ExpenseMode,
   ExpenseSubcategory,
 } from "../types";
+import { formatAmount } from "../../../utils";
 
 export default function AddNewExpense({
   handleClose,
@@ -49,18 +50,18 @@ export default function AddNewExpense({
   const [expenseMode, setExpenseMode] = useState<ExpenseMode[]>([]);
 
   const getExpenseCategory = async function () {
-    const category = await fetchExpenseCategory();
-    setExpenseCategories(category);
+    // const category = await fetchExpenseCategory();
+    // setExpenseCategories(category);
   };
 
   const getSubCategory = async function (categoryId: number) {
-    const subCategory = await fetchExpenseSubCategory(categoryId);
-    setExpenseSubCategories(subCategory);
+    // const subCategory = await fetchExpenseSubCategory(categoryId);
+    // setExpenseSubCategories(subCategory);
   };
 
   const getExpenseMode = async function () {
-    const mode = await fetchExpenseMode();
-    setExpenseMode(mode);
+    // const mode = await fetchExpenseMode();
+    // setExpenseMode(mode);
   };
 
   const expenseCategoryOptions = expenseCategories.map(
@@ -75,9 +76,14 @@ export default function AddNewExpense({
   const handleInputAmount = function (
     event: React.ChangeEvent<HTMLInputElement>
   ) {
-    const input = event.target.value;
-    const convertedNumber = new Intl.NumberFormat("en-IN").format(+input);
-    setAmount(convertedNumber);
+    const rawValue = event.target.value.replace(/,/g, "");
+    if (rawValue === "") {
+      setAmount("");
+      return;
+    }
+    const numericValue = Number(rawValue);
+    if (Number.isNaN(numericValue)) return;
+    setAmount(formatAmount(numericValue));
   };
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
