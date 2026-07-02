@@ -4,18 +4,16 @@ export interface AddNewExpenseProps {
 }
 
 export interface ExpenseSubcategory {
-  id: number;
+  id: string;
   name: string;
-  createdAt: string;
-  updatedAt: string;
 }
-export interface ExpenseCategory extends ExpenseSubcategory {
-  userId: number;
+
+export interface ExpenseCategory {
+  id: string;
+  name: string;
 }
+
 export interface ExpenseMode {
-  id: number;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-  active: boolean;
+  id: string;
+  name: string;
 }

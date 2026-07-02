@@ -42,7 +42,7 @@ const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
     setExpenseCategories(category);
   };
 
-  const getSubCategory = async function (categoryId: number) {
+  const getSubCategory = async function (categoryId: string) {
     const subCategory = await fetchExpenseSubCategory(categoryId);
     setExpenseSubCategories(subCategory);
   };
@@ -59,7 +59,7 @@ const Filters = ({ handleClose, openModal }: AddNewExpenseProps) => {
   const subCategoryOptions = expenseSubCategories?.map(
     (subCategory) => subCategory?.name
   );
-  const expenseModeOptions = expenseMode?.map((mode) => mode?.type);
+  const expenseModeOptions = expenseMode?.map((mode) => mode?.name);
   expenseCategoryOptions.push("All");
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {

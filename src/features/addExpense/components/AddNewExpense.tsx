@@ -28,6 +28,7 @@ import {
   ExpenseSubcategory,
 } from "../types";
 import { formatAmount } from "../../../utils";
+import { EXPENSE_API_BASE_URL } from "../../../data/constants";
 
 export default function AddNewExpense({
   handleClose,
@@ -39,10 +40,10 @@ export default function AddNewExpense({
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [expenseDate, setExpenseDate] = useState<Dayjs | null>(
-    dayjs(new Date())
+    dayjs(new Date()),
   );
   const [expenseCategories, setExpenseCategories] = useState<ExpenseCategory[]>(
-    []
+    [],
   );
   const [expenseSubCategories, setExpenseSubCategories] = useState<
     ExpenseSubcategory[]
@@ -50,31 +51,31 @@ export default function AddNewExpense({
   const [expenseMode, setExpenseMode] = useState<ExpenseMode[]>([]);
 
   const getExpenseCategory = async function () {
-    // const category = await fetchExpenseCategory();
-    // setExpenseCategories(category);
+    const category = await fetchExpenseCategory();
+    setExpenseCategories(category);
   };
 
-  const getSubCategory = async function (categoryId: number) {
-    // const subCategory = await fetchExpenseSubCategory(categoryId);
-    // setExpenseSubCategories(subCategory);
+  const getSubCategory = async function (categoryId: string) {
+    const subCategory = await fetchExpenseSubCategory(categoryId);
+    setExpenseSubCategories(subCategory);
   };
 
   const getExpenseMode = async function () {
-    // const mode = await fetchExpenseMode();
-    // setExpenseMode(mode);
+    const mode = await fetchExpenseMode();
+    setExpenseMode(mode);
   };
 
   const expenseCategoryOptions = expenseCategories.map(
-    (expense) => expense?.name
+    (expense) => expense?.name,
   );
 
   const subCategoryOptions = expenseSubCategories?.map(
-    (subCategory) => subCategory?.name
+    (subCategory) => subCategory?.name,
   );
-  const expenseModeOptions = expenseMode?.map((mode) => mode?.type);
+  const expenseModeOptions = expenseMode?.map((mode) => mode?.name);
 
   const handleInputAmount = function (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const rawValue = event.target.value.replace(/,/g, "");
     if (rawValue === "") {
@@ -86,28 +87,51 @@ export default function AddNewExpense({
     setAmount(formatAmount(numericValue));
   };
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const numericAmount = Number(amount.replace(/,/g, ""));
+  const isFormValid =
+    !!expenseDate &&
+    !!category &&
+    !!subCategory &&
+    !!mode &&
+    amount !== "" &&
+    !Number.isNaN(numericAmount) &&
+    numericAmount > 0;
+
+  const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // {
-    //     "amount":10,
-    //     "expenseDescription":"TV Repairing",
-    //     "paymentId":1,
-    //     "categoryId":5,
-    //     "subCategoryId":1,
-    // }
-    const tempObj = {
-      amount,
-      expenseDescription: description,
-      categoryId: 1,
-      subCategoryId: 1,
-      paymentId: 1,
-      expenseDate: dayjs(expenseDate).toDate(),
-      category,
-      subCategory,
+
+    if (!isFormValid) return;
+
+    const selectedCategory = expenseCategories.find(
+      (expense) => expense.name === category,
+    );
+    const selectedSubCategory = expenseSubCategories.find(
+      (sub) => sub.name === subCategory,
+    );
+    const selectedMode = expenseMode.find(
+      (expenseMode) => expenseMode.name === mode,
+    );
+
+    const dbObject = {
+      amount: numericAmount,
       description,
-      mode,
+      category: selectedCategory?.id,
+      subCategory: selectedSubCategory?.id,
+      expenseMode: selectedMode?.id,
+      expenseDate: dayjs(expenseDate).toDate(),
     };
-    console.log("form object", tempObj);
+
+    try {
+      const response = await fetch(`${EXPENSE_API_BASE_URL}/add-expense`, {
+        method: "POST",
+        body: JSON.stringify(dbObject),
+        headers: { "Content-Type": "application/json" },
+      });
+      console.log("response", response);
+    } catch (error) {
+      console.log(error);
+    }
+
     handleClose();
   };
   useEffect(() => {
@@ -118,7 +142,7 @@ export default function AddNewExpense({
   useEffect(() => {
     if (category) {
       const [selectedCategory] = expenseCategories.filter(
-        (ele) => ele.name === category
+        (ele) => ele.name === category,
       );
       getSubCategory(selectedCategory?.id);
     }
@@ -157,6 +181,7 @@ export default function AddNewExpense({
           value={category}
           onChange={(_, newValue: string | null) => {
             setCategory(newValue);
+            setSubCategory(null);
           }}
           id="expense category"
           options={expenseCategoryOptions}
@@ -235,7 +260,7 @@ export default function AddNewExpense({
         >
           Cancel
         </Button>
-        <Button type="submit" size="large" variant="contained" disabled={false}>
+        <Button type="submit" size="large" variant="contained" disabled={!isFormValid}>
           Submit
         </Button>
       </DialogActions>
