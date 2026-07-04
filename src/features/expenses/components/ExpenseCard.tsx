@@ -20,7 +20,14 @@ export default function ExpenseCard({
   subCategoryName,
   paymentType,
   id,
-}: ExpensesType) {
+  createdAt,
+  updatedAt,
+  onDeleteRequest,
+  onEditRequest,
+}: ExpensesType & {
+  onDeleteRequest?: (id: string) => void;
+  onEditRequest?: (expense: ExpensesType) => void;
+}) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const open = Boolean(anchorEl);
 
@@ -33,10 +40,20 @@ export default function ExpenseCard({
   };
 
   const handleExpenseEdit = function () {
-    console.log("id", id);
+    onEditRequest?.({
+      id,
+      categoryName,
+      expenseAmount,
+      expenseDescription,
+      subCategoryName,
+      paymentType,
+      createdAt,
+      updatedAt,
+    });
     handleClose();
   };
   const handleExpenseDelete = function () {
+    onDeleteRequest?.(id);
     handleClose();
   };
 

@@ -11,26 +11,43 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { Box, Stack } from "@mui/material";
-import { ExpenseTableProps } from "../types";
+import { ExpenseTableProps, ExpensesType } from "../types";
 import { formatAmount } from "../../../utils";
 
-export default function ExpenseTable({ tableData }: ExpenseTableProps) {
+export default function ExpenseTable({
+  tableData,
+  onDeleteRequest,
+  onEditRequest,
+}: ExpenseTableProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+  const [selectedExpense, setSelectedExpense] = useState<ExpensesType | null>(
+    null,
+  );
   const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLElement>,
+    expense: ExpensesType,
+  ) => {
     setAnchorEl(event.currentTarget as HTMLButtonElement);
+    setSelectedExpense(expense);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
+    setSelectedExpense(null);
   };
 
   const handleExpenseEdit = function () {
-    console.log("id");
+    if (selectedExpense) {
+      onEditRequest?.(selectedExpense);
+    }
     handleClose();
   };
   const handleExpenseDelete = function () {
+    if (selectedExpense) {
+      onDeleteRequest?.(selectedExpense.id);
+    }
     handleClose();
   };
 
@@ -102,7 +119,7 @@ export default function ExpenseTable({ tableData }: ExpenseTableProps) {
                   aria-controls={open ? "demo-positioned-menu" : undefined}
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
-                  onClick={handleClick}
+                  onClick={(event) => handleClick(event, row)}
                 >
                   <EditIcon />
                 </IconButton>

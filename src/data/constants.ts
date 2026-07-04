@@ -238,7 +238,8 @@ export const expenseTableData = [
 export const BASE_URL =
   "https://expense-tracker-production-6b8d.up.railway.app";
 
-export const EXPENSE_API_BASE_URL = "http://localhost:5000/expenses";
+export const EXPENSE_API_BASE_URL =
+  "http://localhost:5000/expenses";
 
 // export const BASE_URL=""
 

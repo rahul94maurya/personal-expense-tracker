@@ -12,7 +12,11 @@ import { ExpenseCardProps } from "../types";
 import ExpenseTable from "./ExpenseTable";
 import { formatAmount } from "../../../utils";
 
-export default function Expenses({ expenseData }: ExpenseCardProps) {
+export default function Expenses({
+  expenseData,
+  onDeleteRequest,
+  onEditRequest,
+}: ExpenseCardProps) {
   // const isMobileView = useMediaQuery("(max-width:600px)");
 
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -68,9 +72,18 @@ export default function Expenses({ expenseData }: ExpenseCardProps) {
             }}
           >
             {expense.expenses.map((ele) => (
-              <ExpenseCard key={ele.id} {...ele} />
+              <ExpenseCard
+                key={ele.id}
+                {...ele}
+                onDeleteRequest={onDeleteRequest}
+                onEditRequest={onEditRequest}
+              />
             ))}
-            <ExpenseTable tableData={expense.expenses} />
+            <ExpenseTable
+              tableData={expense.expenses}
+              onDeleteRequest={onDeleteRequest}
+              onEditRequest={onEditRequest}
+            />
           </AccordionDetails>
         </Accordion>
       ))}

@@ -30,10 +30,22 @@ import {
 import { formatAmount } from "../../../utils";
 import { EXPENSE_API_BASE_URL } from "../../../data/constants";
 
+const resetForm = () => ({
+  category: null as string | null,
+  subCategory: null as string | null,
+  mode: null as string | null,
+  description: "",
+  amount: "",
+  expenseDate: dayjs(new Date()),
+});
+
 export default function AddNewExpense({
   handleClose,
   openModal,
+  onExpenseAdded,
+  expenseToEdit,
 }: AddNewExpenseProps) {
+  const isEditMode = !!expenseToEdit;
   const [category, setCategory] = useState<string | null>(null);
   const [subCategory, setSubCategory] = useState<string | null>(null);
   const [mode, setMode] = useState<string | null>(null);
@@ -122,12 +134,18 @@ export default function AddNewExpense({
     };
 
     try {
-      const response = await fetch(`${EXPENSE_API_BASE_URL}/add-expense`, {
-        method: "POST",
+      const endpoint = isEditMode
+        ? `${EXPENSE_API_BASE_URL}/update-expense/${expenseToEdit.id}`
+        : `${EXPENSE_API_BASE_URL}/add-expense`;
+      const response = await fetch(endpoint, {
+        method: isEditMode ? "PUT" : "POST",
         body: JSON.stringify(dbObject),
         headers: { "Content-Type": "application/json" },
       });
-      console.log("response", response);
+
+      if (response.ok) {
+        onExpenseAdded?.();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -140,13 +158,45 @@ export default function AddNewExpense({
   }, []);
 
   useEffect(() => {
-    if (category) {
-      const [selectedCategory] = expenseCategories.filter(
-        (ele) => ele.name === category,
-      );
-      getSubCategory(selectedCategory?.id);
+    if (!openModal) return;
+
+    if (expenseToEdit) {
+      setCategory(expenseToEdit.categoryName);
+      setDescription(expenseToEdit.expenseDescription);
+      setMode(expenseToEdit.paymentType);
+      setAmount(formatAmount(expenseToEdit.expenseAmount));
+      setExpenseDate(dayjs(expenseToEdit.createdAt));
+      return;
     }
-  }, [category, expenseCategories]);
+
+    const defaults = resetForm();
+    setCategory(defaults.category);
+    setSubCategory(defaults.subCategory);
+    setMode(defaults.mode);
+    setDescription(defaults.description);
+    setAmount(defaults.amount);
+    setExpenseDate(defaults.expenseDate);
+    setExpenseSubCategories([]);
+  }, [openModal, expenseToEdit]);
+
+  useEffect(() => {
+    if (!openModal || !category) return;
+
+    const selectedCategory = expenseCategories.find(
+      (item) => item.name === category,
+    );
+    if (selectedCategory) {
+      getSubCategory(selectedCategory.id);
+    }
+  }, [category, expenseCategories, openModal]);
+
+  useEffect(() => {
+    if (!openModal || !expenseToEdit || !category) return;
+    if (category !== expenseToEdit.categoryName) return;
+    if (expenseSubCategories.length === 0) return;
+
+    setSubCategory(expenseToEdit.subCategoryName);
+  }, [openModal, expenseToEdit, category, expenseSubCategories]);
 
   return (
     <Dialog
@@ -164,7 +214,7 @@ export default function AddNewExpense({
           justifyContent: "center",
         }}
       >
-        Add New Expense
+        {isEditMode ? "Edit Expense" : "Add New Expense"}
       </DialogTitle>
       <DialogContent>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -261,7 +311,7 @@ export default function AddNewExpense({
           Cancel
         </Button>
         <Button type="submit" size="large" variant="contained" disabled={!isFormValid}>
-          Submit
+          {isEditMode ? "Update" : "Submit"}
         </Button>
       </DialogActions>
     </Dialog>

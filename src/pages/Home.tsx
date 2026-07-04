@@ -4,9 +4,11 @@ import AddIcon from "@mui/icons-material/Add";
 import { useEffect, useState } from "react";
 import { AddNewExpenseModal } from "../features/addExpense";
 import Expenses from "../features/expenses/components/Expenses";
+import DeleteExpenseModal from "../features/expenses/components/DeleteExpenseModal";
 import { Card, Divider, IconButton, Stack, Typography } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { formatAmount } from "../utils";
 import { useAppDispatch, useAppSelector } from "../hooks";
 import {
@@ -14,6 +16,7 @@ import {
   selectLoadingStatus,
 } from "../features/expenses/slices/expenseSlice";
 import { fetchExpenseList } from "../features/expenses/services";
+import { ExpensesType } from "../features/expenses/types";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 
@@ -23,11 +26,35 @@ export default function Home() {
   // const error = useAppSelector(selectErrorMessage);
   const dispatch = useAppDispatch();
   const [openExpenseModal, setOpenExpenseModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [expenseToDelete, setExpenseToDelete] = useState<string | null>(null);
+  const [expenseToEdit, setExpenseToEdit] = useState<ExpensesType | null>(null);
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   // const isMobileView = useMediaQuery("(max-width:600px)");
 
   const handleCloseExpenseModal = function () {
     setOpenExpenseModal(false);
+    setExpenseToEdit(null);
+  };
+
+  const handleEditRequest = (expense: ExpensesType) => {
+    setExpenseToEdit(expense);
+    setOpenExpenseModal(true);
+  };
+
+  const handleOpenAddExpenseModal = () => {
+    setExpenseToEdit(null);
+    setOpenExpenseModal(true);
+  };
+
+  const handleDeleteRequest = (id: string) => {
+    setExpenseToDelete(id);
+    setOpenDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
+    setExpenseToDelete(null);
   };
 
   const handleNextMonthClick = () => {
@@ -39,7 +66,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    // dispatch(fetchExpenseList());
+    dispatch(fetchExpenseList());
   }, [dispatch]);
 
   if (loadingStatus === "loading") {
@@ -83,9 +110,12 @@ export default function Home() {
               flexItem
               sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
             />
-            <Typography variant="h6">
-              {formatAmount(expenseData?.totalAmount as number)}
-            </Typography>
+            <Stack direction="row" alignItems="center" gap={0.5}>
+              <CurrencyRupeeIcon />
+              <Typography variant="h6">
+                {formatAmount(expenseData?.totalAmount as number)}
+              </Typography>
+            </Stack>
           </Stack>
           <IconButton
             aria-label="Right arrow"
@@ -103,13 +133,15 @@ export default function Home() {
       ) : (
         <></>
       )}
-      <Expenses expenseData={expenseData?.dayWiseExpense ?? []} />
+      <Expenses
+        expenseData={expenseData?.dayWiseExpense ?? []}
+        onDeleteRequest={handleDeleteRequest}
+        onEditRequest={handleEditRequest}
+      />
 
       <Tooltip title="Add new Expense" arrow>
         <Fab
-          onClick={() => {
-            setOpenExpenseModal(true);
-          }}
+          onClick={handleOpenAddExpenseModal}
           color="secondary"
           aria-label="Add new Expense"
           sx={{
@@ -125,6 +157,16 @@ export default function Home() {
         <AddNewExpenseModal
           openModal={openExpenseModal}
           handleClose={handleCloseExpenseModal}
+          expenseToEdit={expenseToEdit}
+          onExpenseAdded={() => dispatch(fetchExpenseList())}
+        />
+      )}
+      {openDeleteModal && (
+        <DeleteExpenseModal
+          openModal={openDeleteModal}
+          handleClose={handleCloseDeleteModal}
+          expenseId={expenseToDelete}
+          onExpenseDeleted={() => dispatch(fetchExpenseList())}
         />
       )}
     </Stack>

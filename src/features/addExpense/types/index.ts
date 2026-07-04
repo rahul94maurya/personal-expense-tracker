@@ -1,6 +1,10 @@
+import { ExpensesType } from "../../expenses/types";
+
 export interface AddNewExpenseProps {
   handleClose: () => void;
   openModal: boolean;
+  onExpenseAdded?: () => void;
+  expenseToEdit?: ExpensesType | null;
 }
 
 export interface ExpenseSubcategory {

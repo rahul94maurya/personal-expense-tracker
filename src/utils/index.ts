@@ -14,10 +14,11 @@ export const groupDuplicateDates = function (dates: any) {
   const result: any = {};
 
   dates.forEach((date: any) => {
-    if (result[date.createdAt]) {
-      result[date.createdAt].push(date);
+    const dateKey = new Date(date.createdAt).toISOString().split("T")[0];
+    if (result[dateKey]) {
+      result[dateKey].push(date);
     } else {
-      result[date.createdAt] = [date];
+      result[dateKey] = [date];
     }
   });
   return result;
@@ -27,17 +28,20 @@ export const generateExpenseData = function (expenses: any[]) {
   const expenseData: any = {};
   const totalAmount = expenses.reduce(
     (acc, expense) => acc + expense.expenseAmount,
-    0
+    0,
   );
 
   expenseData.totalAmount = totalAmount;
 
-  const [currentMonth, currentYear] = new Date(expenses[0].createdAt)
-    .toLocaleString("default", { month: "short", year: "2-digit" })
-    .split(" ");
+  const referenceDate =
+    expenses.length > 0 ? new Date(expenses[0].createdAt) : new Date();
 
-  expenseData.currentMonth = currentMonth;
-  expenseData.currentYear = currentYear;
+  expenseData.currentMonth = referenceDate.toLocaleString("default", {
+    month: "long",
+  });
+  expenseData.currentYear = referenceDate.toLocaleString("default", {
+    year: "numeric",
+  });
 
   const groupedData = groupDuplicateDates(expenses);
   const dayWiseExpense: any = [];
