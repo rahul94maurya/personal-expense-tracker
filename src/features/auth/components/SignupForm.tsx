@@ -17,6 +17,7 @@ import {
   selectLoadingStatus,
   selectLoginErrorMessage,
 } from "../slices/authSlice";
+import { SignupResponseType } from "../types";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -51,20 +52,22 @@ const SignupForm = () => {
     }
 
     try {
-      await dispatch(
+      const response: SignupResponseType = await dispatch(
         fetchSignupStatus({
           username: name,
           email,
           password,
-        })
+        }),
       ).unwrap();
 
-      setToast({
-        message: "Account created successfully. Please log in.",
-        open: true,
-        severity: "success",
-      });
-      navigate("/login");
+      if (response?.message) {
+        setToast({
+          message: response.message,
+          open: true,
+          severity: "success",
+        });
+        navigate("/login");
+      }
     } catch {
       // Error is handled via Redux state + useEffect toast
     }

@@ -25,3 +25,7 @@ export type SignupDetailsType = {
   email: string;
   password: string;
 };
+
+export type SignupResponseType = {
+  message: string;
+};
