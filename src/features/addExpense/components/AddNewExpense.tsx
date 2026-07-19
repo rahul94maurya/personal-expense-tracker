@@ -130,7 +130,7 @@ export default function AddNewExpense({
       category: selectedCategory?.id,
       subCategory: selectedSubCategory?.id,
       expenseMode: selectedMode?.id,
-      expenseDate: dayjs(expenseDate).toDate(),
+      expenseDate: expenseDate.format("YYYY-MM-DD"),
     };
 
     try {
@@ -165,7 +165,7 @@ export default function AddNewExpense({
       setDescription(expenseToEdit.expenseDescription);
       setMode(expenseToEdit.paymentType);
       setAmount(formatAmount(expenseToEdit.expenseAmount));
-      setExpenseDate(dayjs(expenseToEdit.createdAt));
+      setExpenseDate(dayjs(expenseToEdit.createdAt.split("T")[0]));
       return;
     }
 
@@ -310,7 +310,12 @@ export default function AddNewExpense({
         >
           Cancel
         </Button>
-        <Button type="submit" size="large" variant="contained" disabled={!isFormValid}>
+        <Button
+          type="submit"
+          size="large"
+          variant="contained"
+          disabled={!isFormValid}
+        >
           {isEditMode ? "Update" : "Submit"}
         </Button>
       </DialogActions>
