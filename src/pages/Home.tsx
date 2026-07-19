@@ -86,52 +86,51 @@ export default function Home() {
   }
   return (
     <Stack>
-      <Card sx={{ mb: 2 }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          p={1}
-        >
-          <IconButton
-            aria-label="left arrow"
-            size="medium"
-            onClick={handlePreviousMonthClick}
+      {expenseData?.dayWiseExpense ? (
+        <Card sx={{ mb: 2 }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            justifyContent="space-between"
+            p={1}
           >
-            <ArrowBackIosIcon />
-          </IconButton>
-          <Stack direction={"row"} gap={5} alignItems={"center"}>
-            <Typography variant="h6">
-              {/* {allMonths[selectedMonth]}, {24} */}
-              {expenseData?.currentMonth}, {expenseData?.currentYear}
-            </Typography>
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
-            />
-            <Stack direction="row" alignItems="center" gap={0.5}>
-              <CurrencyRupeeIcon />
+            <IconButton
+              aria-label="left arrow"
+              size="medium"
+              onClick={handlePreviousMonthClick}
+            >
+              <ArrowBackIosIcon />
+            </IconButton>
+            <Stack direction={"row"} gap={5} alignItems={"center"}>
               <Typography variant="h6">
-                {formatAmount(expenseData?.totalAmount as number)}
+                {/* {allMonths[selectedMonth]}, {24} */}
+                {expenseData?.currentMonth}, {expenseData?.currentYear}
               </Typography>
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ borderRightWidth: 3, borderColor: "secondary.main" }}
+              />
+              <Stack direction="row" alignItems="center" gap={0.5}>
+                <CurrencyRupeeIcon />
+                <Typography variant="h6">
+                  {formatAmount(expenseData?.totalAmount as number)}
+                </Typography>
+              </Stack>
             </Stack>
+            <IconButton
+              aria-label="Right arrow"
+              size="medium"
+              onClick={handleNextMonthClick}
+            >
+              <ArrowForwardIosIcon />
+            </IconButton>
           </Stack>
-          <IconButton
-            aria-label="Right arrow"
-            size="medium"
-            onClick={handleNextMonthClick}
-          >
-            <ArrowForwardIosIcon />
-          </IconButton>
-        </Stack>
-      </Card>
-      {!expenseData?.dayWiseExpense ? (
+        </Card>
+      ) : (
         <Stack justifyContent="center">
           No expense Found. Please add a expense
         </Stack>
-      ) : (
-        <></>
       )}
       <Expenses
         expenseData={expenseData?.dayWiseExpense ?? []}

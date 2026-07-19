@@ -57,6 +57,7 @@ const SignupForm = () => {
           username: name,
           email,
           password,
+          confirmPassword,
         }),
       ).unwrap();
 

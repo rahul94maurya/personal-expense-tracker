@@ -24,6 +24,7 @@ export type SignupDetailsType = {
   username: string;
   email: string;
   password: string;
+  confirmPassword: string;
 };
 
 export type SignupResponseType = {

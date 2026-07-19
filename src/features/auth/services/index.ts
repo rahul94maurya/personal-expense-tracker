@@ -27,7 +27,7 @@ export const fetchLoginStatus = createAsyncThunk(
     try {
       const response = await axios.post(
         `${BASE_URL}/api/auth/signin`,
-        loginDetails
+        loginDetails,
       );
       console.log("response: " + JSON.stringify(response));
       const userData = response.data;
@@ -36,7 +36,7 @@ export const fetchLoginStatus = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(getAuthErrorMessage(err));
     }
-  }
+  },
 );
 
 export const fetchSignupStatus = createAsyncThunk(
@@ -45,11 +45,11 @@ export const fetchSignupStatus = createAsyncThunk(
     try {
       const response = await axios.post(
         `${BASE_URL}/api/auth/signup`,
-        signupDetails
+        signupDetails,
       );
       return response.data;
     } catch (err) {
       return rejectWithValue(getAuthErrorMessage(err));
     }
-  }
+  },
 );
