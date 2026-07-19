@@ -19,3 +19,9 @@ export type LoginDetailsType = {
   username: string;
   password: string;
 };
+
+export type SignupDetailsType = {
+  username: string;
+  email: string;
+  password: string;
+};

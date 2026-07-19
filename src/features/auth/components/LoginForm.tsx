@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { fetchLoginStatus } from "../services";
@@ -18,7 +20,7 @@ import {
   selectLoginErrorMessage,
 } from "../slices/authSlice";
 import { UserType } from "../types";
-import { useNavigate } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const LoginForm = () => {
@@ -104,6 +106,13 @@ const LoginForm = () => {
           >
             {!isLoading ? "Log In" : <CircularProgress size={25} />}
           </Button>
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/signup" variant="body2">
+                Don't have an account? Sign up
+              </Link>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
       <Snackbar

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { InitialLoginStatus, UserType } from "../types";
-import { fetchLoginStatus } from "../services";
+import { fetchLoginStatus, fetchSignupStatus } from "../services";
 
 const initialState: InitialLoginStatus = {
   status: "idle",
@@ -29,6 +29,17 @@ const authSlice = createSlice({
       }
     );
     builder.addCase(fetchLoginStatus.rejected, (state, action) => {
+      state.status = "error";
+      state.error = action.payload as string | null;
+    });
+    builder.addCase(fetchSignupStatus.pending, (state) => {
+      state.status = "loading";
+      state.error = null;
+    });
+    builder.addCase(fetchSignupStatus.fulfilled, (state) => {
+      state.status = "success";
+    });
+    builder.addCase(fetchSignupStatus.rejected, (state, action) => {
       state.status = "error";
       state.error = action.payload as string | null;
     });
