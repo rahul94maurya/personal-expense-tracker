@@ -36,11 +36,11 @@ const LoginForm = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const loginDetails = {
-      username: data.get("email") as string,
+      email: data.get("email") as string,
       password: data.get("password") as string,
     };
     const response: UserType = await dispatch(
-      fetchLoginStatus(loginDetails)
+      fetchLoginStatus(loginDetails),
     ).unwrap();
 
     if (response.accessToken) {

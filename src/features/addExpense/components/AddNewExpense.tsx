@@ -135,8 +135,8 @@ export default function AddNewExpense({
 
     try {
       const endpoint = isEditMode
-        ? `${EXPENSE_API_BASE_URL}/update-expense/${expenseToEdit.id}`
-        : `${EXPENSE_API_BASE_URL}/add-expense`;
+        ? `${EXPENSE_API_BASE_URL}/expenses/update-expense/${expenseToEdit.id}`
+        : `${EXPENSE_API_BASE_URL}/expenses/add-expense`;
       const response = await fetch(endpoint, {
         method: isEditMode ? "PUT" : "POST",
         body: JSON.stringify(dbObject),

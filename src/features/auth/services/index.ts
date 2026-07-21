@@ -3,6 +3,7 @@ import { BASE_URL } from "../../../data/constants";
 import { setAuthToken } from "../../../utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginDetailsType, SignupDetailsType } from "../types";
+import { EXPENSE_API_BASE_URL } from "../../../data/constants";
 
 const getAuthErrorMessage = (err: unknown) => {
   const error = err as AxiosError;
@@ -26,13 +27,13 @@ export const fetchLoginStatus = createAsyncThunk(
   async (loginDetails: LoginDetailsType, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/auth/signin`,
+        `${EXPENSE_API_BASE_URL}/auth/login`,
         loginDetails,
       );
       console.log("response: " + JSON.stringify(response));
       const userData = response.data;
-      setAuthToken(userData.accessToken);
-      return userData;
+      setAuthToken(userData.data.accessToken);
+      return userData.data;
     } catch (err) {
       return rejectWithValue(getAuthErrorMessage(err));
     }
@@ -44,7 +45,7 @@ export const fetchSignupStatus = createAsyncThunk(
   async (signupDetails: SignupDetailsType, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${BASE_URL}/api/auth/signup`,
+        `${EXPENSE_API_BASE_URL}/auth/signup`,
         signupDetails,
       );
       return response.data;

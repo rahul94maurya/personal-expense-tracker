@@ -54,7 +54,7 @@ const SignupForm = () => {
     try {
       const response: SignupResponseType = await dispatch(
         fetchSignupStatus({
-          username: name,
+          name,
           email,
           password,
           confirmPassword,

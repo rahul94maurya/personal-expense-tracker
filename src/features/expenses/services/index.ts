@@ -15,14 +15,16 @@ const mapExpenseResponse = (expense: ApiExpense): ExpensesType => ({
 });
 
 export const deleteExpense = async (id: string): Promise<void> => {
-  await axios.delete(`${EXPENSE_API_BASE_URL}/delete-expense/${id}`);
+  await axios.delete(`${EXPENSE_API_BASE_URL}/expenses/delete-expense/${id}`);
 };
 
 export const fetchExpenseList = createAsyncThunk(
   "expenses/fetchExpenseList",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get<ApiExpense[]>(EXPENSE_API_BASE_URL);
+      const response = await axios.get<ApiExpense[]>(
+        `${EXPENSE_API_BASE_URL}/expenses`,
+      );
       return response.data.map(mapExpenseResponse);
     } catch (err) {
       console.error("Failed to fetch expense list", err);

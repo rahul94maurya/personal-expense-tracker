@@ -1,12 +1,10 @@
 import { StatusType } from "../../../types";
 
 export interface UserType {
-  id: string;
-  username: string;
+  userId: string;
+  name: string;
   email: string;
-  roles: string[];
   accessToken: string;
-  tokenType: string;
 }
 
 export interface InitialLoginStatus {
@@ -16,12 +14,12 @@ export interface InitialLoginStatus {
 }
 
 export type LoginDetailsType = {
-  username: string;
+  email: string;
   password: string;
 };
 
 export type SignupDetailsType = {
-  username: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;

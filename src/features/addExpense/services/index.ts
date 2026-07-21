@@ -11,7 +11,7 @@ export const fetchExpenseCategory = async function (): Promise<
 > {
   try {
     const response = await axios.get<ExpenseCategory[]>(
-      `${EXPENSE_API_BASE_URL}/categories`
+      `${EXPENSE_API_BASE_URL}/expenses/categories`
     );
     return response.data;
   } catch (err) {
@@ -25,7 +25,7 @@ export const fetchExpenseSubCategory = async function (
 ): Promise<ExpenseSubcategory[]> {
   try {
     const response = await axios.get<ExpenseSubcategory[]>(
-      `${EXPENSE_API_BASE_URL}/subcategories/${id}`
+      `${EXPENSE_API_BASE_URL}/expenses/subcategories/${id}`
     );
     return response.data;
   } catch (err) {
@@ -37,7 +37,7 @@ export const fetchExpenseSubCategory = async function (
 export const fetchExpenseMode = async function (): Promise<ExpenseMode[]> {
   try {
     const response = await axios.get<ExpenseMode[]>(
-      `${EXPENSE_API_BASE_URL}/expense-modes`
+      `${EXPENSE_API_BASE_URL}/expenses/expense-modes`
     );
     return response.data;
   } catch (err) {
