@@ -1,7 +1,6 @@
-import axios from "axios";
-import { EXPENSE_API_BASE_URL } from "../../../data/constants";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ApiExpense, ExpensesType } from "../types";
+import { apiClient } from "../../../services/apiClient";
 
 const mapExpenseResponse = (expense: ApiExpense): ExpensesType => ({
   id: expense.id,
@@ -15,16 +14,14 @@ const mapExpenseResponse = (expense: ApiExpense): ExpensesType => ({
 });
 
 export const deleteExpense = async (id: string): Promise<void> => {
-  await axios.delete(`${EXPENSE_API_BASE_URL}/expenses/delete-expense/${id}`);
+  await apiClient.delete(`/expenses/delete-expense/${id}`);
 };
 
 export const fetchExpenseList = createAsyncThunk(
   "expenses/fetchExpenseList",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get<ApiExpense[]>(
-        `${EXPENSE_API_BASE_URL}/expenses`,
-      );
+      const response = await apiClient.get<ApiExpense[]>("/expenses");
       return response.data.map(mapExpenseResponse);
     } catch (err) {
       console.error("Failed to fetch expense list", err);

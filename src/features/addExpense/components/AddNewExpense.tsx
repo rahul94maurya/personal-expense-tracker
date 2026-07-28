@@ -11,6 +11,7 @@ import InputLabel from "@mui/material/InputLabel";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import CircularProgress from "@mui/material/CircularProgress";
 import dayjs, { Dayjs } from "dayjs";
 import { DemoItem } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -20,6 +21,7 @@ import {
   fetchExpenseCategory,
   fetchExpenseMode,
   fetchExpenseSubCategory,
+  saveExpense,
 } from "../services";
 import {
   AddNewExpenseProps,
@@ -28,7 +30,8 @@ import {
   ExpenseSubcategory,
 } from "../types";
 import { formatAmount } from "../../../utils";
-import { EXPENSE_API_BASE_URL } from "../../../data/constants";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { selectAddExpenseLoadingStatus } from "../slices/addExpenseSlice";
 
 const resetForm = () => ({
   category: null as string | null,
@@ -45,6 +48,9 @@ export default function AddNewExpense({
   onExpenseAdded,
   expenseToEdit,
 }: AddNewExpenseProps) {
+  const dispatch = useAppDispatch();
+  const loadingStatus = useAppSelector(selectAddExpenseLoadingStatus);
+  const isLoading = loadingStatus === "loading";
   const isEditMode = !!expenseToEdit;
   const [category, setCategory] = useState<string | null>(null);
   const [subCategory, setSubCategory] = useState<string | null>(null);
@@ -112,7 +118,7 @@ export default function AddNewExpense({
   const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!isFormValid) return;
+    if (!isFormValid || !expenseDate) return;
 
     const selectedCategory = expenseCategories.find(
       (expense) => expense.name === category,
@@ -124,7 +130,7 @@ export default function AddNewExpense({
       (expenseMode) => expenseMode.name === mode,
     );
 
-    const dbObject = {
+    const expense = {
       amount: numericAmount,
       description,
       category: selectedCategory?.id,
@@ -134,24 +140,19 @@ export default function AddNewExpense({
     };
 
     try {
-      const endpoint = isEditMode
-        ? `${EXPENSE_API_BASE_URL}/expenses/update-expense/${expenseToEdit.id}`
-        : `${EXPENSE_API_BASE_URL}/expenses/add-expense`;
-      const response = await fetch(endpoint, {
-        method: isEditMode ? "PUT" : "POST",
-        body: JSON.stringify(dbObject),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      if (response.ok) {
-        onExpenseAdded?.();
-      }
+      await dispatch(
+        saveExpense({
+          expense,
+          expenseId: isEditMode ? expenseToEdit.id : undefined,
+        }),
+      ).unwrap();
+      onExpenseAdded?.();
+      handleClose();
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
-
-    handleClose();
   };
+
   useEffect(() => {
     getExpenseCategory();
     getExpenseMode();
@@ -307,6 +308,7 @@ export default function AddNewExpense({
           variant="contained"
           color="error"
           size="large"
+          disabled={isLoading}
         >
           Cancel
         </Button>
@@ -314,9 +316,15 @@ export default function AddNewExpense({
           type="submit"
           size="large"
           variant="contained"
-          disabled={!isFormValid}
+          disabled={!isFormValid || isLoading}
         >
-          {isEditMode ? "Update" : "Submit"}
+          {isLoading ? (
+            <CircularProgress size={25} />
+          ) : isEditMode ? (
+            "Update"
+          ) : (
+            "Submit"
+          )}
         </Button>
       </DialogActions>
     </Dialog>

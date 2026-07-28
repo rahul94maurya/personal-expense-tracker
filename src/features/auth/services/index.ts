@@ -1,5 +1,4 @@
 import axios, { AxiosError } from "axios";
-import { BASE_URL } from "../../../data/constants";
 import { setAuthToken } from "../../../utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { LoginDetailsType, SignupDetailsType } from "../types";

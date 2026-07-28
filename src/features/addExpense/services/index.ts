@@ -1,17 +1,30 @@
-import axios from "axios";
-import { EXPENSE_API_BASE_URL } from "../../../data/constants";
+import { AxiosError } from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   ExpenseCategory,
   ExpenseMode,
   ExpenseSubcategory,
+  SaveExpensePayloadType,
 } from "../types";
+import { apiClient } from "../../../services/apiClient";
+
+const getExpenseErrorMessage = (err: unknown) => {
+  const error = err as AxiosError;
+  if (error.response) {
+    return (
+      (error.response.data as { message: string })?.message ||
+      "Failed to save expense"
+    );
+  }
+  return error.message;
+};
 
 export const fetchExpenseCategory = async function (): Promise<
   ExpenseCategory[]
 > {
   try {
-    const response = await axios.get<ExpenseCategory[]>(
-      `${EXPENSE_API_BASE_URL}/expenses/categories`
+    const response = await apiClient.get<ExpenseCategory[]>(
+      "/expenses/categories",
     );
     return response.data;
   } catch (err) {
@@ -21,11 +34,11 @@ export const fetchExpenseCategory = async function (): Promise<
 };
 
 export const fetchExpenseSubCategory = async function (
-  id: string
+  id: string,
 ): Promise<ExpenseSubcategory[]> {
   try {
-    const response = await axios.get<ExpenseSubcategory[]>(
-      `${EXPENSE_API_BASE_URL}/expenses/subcategories/${id}`
+    const response = await apiClient.get<ExpenseSubcategory[]>(
+      `/expenses/subcategories/${id}`,
     );
     return response.data;
   } catch (err) {
@@ -36,8 +49,8 @@ export const fetchExpenseSubCategory = async function (
 
 export const fetchExpenseMode = async function (): Promise<ExpenseMode[]> {
   try {
-    const response = await axios.get<ExpenseMode[]>(
-      `${EXPENSE_API_BASE_URL}/expenses/expense-modes`
+    const response = await apiClient.get<ExpenseMode[]>(
+      "/expenses/expense-modes",
     );
     return response.data;
   } catch (err) {
@@ -45,3 +58,26 @@ export const fetchExpenseMode = async function (): Promise<ExpenseMode[]> {
     return [];
   }
 };
+
+export const saveExpense = createAsyncThunk(
+  "addExpense/saveExpense",
+  async (
+    { expense, expenseId }: SaveExpensePayloadType,
+    { rejectWithValue },
+  ) => {
+    try {
+      const isEditMode = !!expenseId;
+      const url = isEditMode
+        ? `/expenses/update-expense/${expenseId}`
+        : "/expenses/add-expense";
+
+      const response = isEditMode
+        ? await apiClient.put(url, expense)
+        : await apiClient.post(url, expense);
+
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(getExpenseErrorMessage(err));
+    }
+  },
+);
